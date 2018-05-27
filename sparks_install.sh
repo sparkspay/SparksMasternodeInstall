@@ -18,7 +18,7 @@ NODEIP=$(curl -s4 icanhazip.com)
 
 BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
-CYAN="\033[0;36m" 
+CYAN="\033[0;36m"
 PURPLE="\033[0;35m"
 RED='\033[0;31m'
 GREEN="\033[0;32m"
@@ -122,6 +122,11 @@ daemon=1
 port=$COIN_PORT
 EOF
 }
+function grab_bootstrap() {
+cd $CONFIGFOLDER
+  wget -q https://github.com/SparksReborn/sparkspay/releases/download/v0.12.2.5/bootstrap.dat
+
+}
 
 function create_key() {
   echo -e "${YELLOW}Enter your ${RED}$COIN_NAME Masternode GEN Key${NC}."
@@ -154,6 +159,9 @@ maxconnections=256
 masternode=1
 externalip=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
+
+#Temp
+printtodebuglog=0
 
 #ADDNODES
 
@@ -286,6 +294,7 @@ function setup_node() {
   update_config
   enable_firewall
   install_sentinel
+  grab_bootstrap
   important_information
   configure_systemd
 }
@@ -299,4 +308,3 @@ checks
 prepare_system
 download_node
 setup_node
-
