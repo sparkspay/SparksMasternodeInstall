@@ -8,6 +8,7 @@ COIN_CLI='Sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/SparksReborn/sparkspay.git'
 COIN_TGZ='https://github.com/SparksReborn/sparkspay/releases/download/v0.12.2.5/Sparkscore-0.12.2.5-linux64.tar.gz'
+COIN_BOOTSTRAP='https://github.com/SparksReborn/sparkspay/releases/download/v0.12.2.5/bootstrap.dat'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 SENTINEL_REPO='https://github.com/sparkscrypto/sentinel'
 COIN_NAME='Sparks'
@@ -122,10 +123,10 @@ daemon=1
 port=$COIN_PORT
 EOF
 }
+
 function grab_bootstrap() {
 cd $CONFIGFOLDER
-  wget -q https://github.com/SparksReborn/sparkspay/releases/download/v0.12.2.5/bootstrap.dat
-
+  wget -q $COIN_BOOTSTRAP
 }
 
 function create_key() {
@@ -285,6 +286,7 @@ function important_information() {
  echo -e "${YELLOW}ETH: 0x765eA1753A1eB7b12500499405e811f4d5164554"
  echo -e "${YELLOW}LTC: LNt9EQputZK8djTSZyR3jE72o7NXNrb4aB${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
+# echo -e "${RED}tweaks by DrWeez for deploymnets on arubacloud.com "
 }
 
 function setup_node() {
