@@ -108,6 +108,18 @@ EOF
 }
 
 
+function created_upgrade() {
+#DrWeez IS JUST LAZY
+cd
+cat << EOF > upgrade.sh
+  #!/bin/bash
+  sudo apt update
+  sudo apt -y dist-upgrade
+  sudo apt -y autoremove
+EOF
+
+}
+
 function create_config() {
   mkdir $CONFIGFOLDER >/dev/null 2>&1
   RPCUSER=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w10 | head -n1)
@@ -299,6 +311,7 @@ function setup_node() {
   grab_bootstrap
   important_information
   configure_systemd
+  created_upgrade
 }
 
 
