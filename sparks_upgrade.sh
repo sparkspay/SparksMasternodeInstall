@@ -88,6 +88,29 @@ function install_sentinel() {
 
 }
 
+function configure_sentinel {
+rm /root/.sparkscore/sentinel/sentinel.config >/dev/null 2>&1
+touch /root/.sparkscore/sentinel/sentinel.config >/dev/null 2>&1
+cat << EOF > /root/.sparkscore/sentinel/sentinel.config
+
+# specify path to dash.conf or leave blank
+# default is the same as DashCore
+dash_conf=/root/.sparkscore/sparks.conf
+
+# valid options are mainnet, testnet (default=mainnet)
+network=mainnet
+#network=testnet
+
+# database connection details
+db_name=database/sentinel.db
+db_driver=sqlite
+
+#DrWeez
+
+EOF
+
+}
+
 function configure_systemd() {
   rm /etc/systemd/system/Sparks.service >/dev/null 2>&1
   cat << EOF > /etc/systemd/system/$COIN_NAME.service
@@ -190,6 +213,16 @@ fi
 clear
 }
 
+Function enable_fail2ban() {
+
+echo "installing fail to ban"
+apt -y install fail2ban
+systemctl enable fail2ban
+systemctl start fail2ban
+echo "FailtoBan done"
+
+}
+
 function important_information() {
  echo
  echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${RED}systemctl status $COIN_NAME.service${NC}"
@@ -198,6 +231,8 @@ function important_information() {
  echo -e "${RED}Sentinel${NC} is installed in ${RED}/root/sentinel_$COIN_NAME${NC}"
  echo -e "Sentinel logs is: ${RED}$CONFIGFOLDER/sentinel.log${NC}"
  fi
+ echo -e "Fail2Ban log is: ${RED}sudo tail -f /var/log/fail2ban.log{NC}"
+ echo
  echo -e "${BLUE}================================================================================================================================"
  echo -e "${CYAN}Original install script by Real_Bit_Yoda Follow twitter to stay updated.  https://twitter.com/Real_Bit_Yoda${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
@@ -220,7 +255,9 @@ function setup_node() {
   #create_key
   #update_config
 #  enable_firewall
+  enable_fail2ban
   install_sentinel
+  configure_sentinel
 #  grab_bootstrap
   important_information
   configure_systemd

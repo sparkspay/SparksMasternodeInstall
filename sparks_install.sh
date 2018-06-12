@@ -191,6 +191,15 @@ function enable_firewall() {
   echo "y" | ufw enable >/dev/null 2>&1
 }
 
+Function enable_fail2ban() {
+
+echo "installing fail to ban"
+apt -y install fail2ban
+systemctl enable fail2ban
+systemctl start fail2ban
+echo "FailtoBan done"
+
+}
 
 function get_ip() {
   declare -a NODE_IPS
@@ -289,6 +298,7 @@ function important_information() {
  echo -e "${RED}Sentinel${NC} is installed in ${RED}/root/sentinel_$COIN_NAME${NC}"
  echo -e "Sentinel logs is: ${RED}$CONFIGFOLDER/sentinel.log${NC}"
  fi
+ echo -e "Fail2Ban log is: ${RED}sudo tail -f /var/log/fail2ban.log{NC}"
  echo -e "${BLUE}================================================================================================================================"
  echo -e "${CYAN}Follow twitter to stay updated.  https://twitter.com/Real_Bit_Yoda${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
@@ -307,6 +317,7 @@ function setup_node() {
   create_key
   update_config
   enable_firewall
+  enable_fail2ban
   install_sentinel
   grab_bootstrap
   important_information
