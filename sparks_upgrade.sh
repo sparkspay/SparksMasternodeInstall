@@ -102,7 +102,8 @@ touch /root/.sparkscore/sentinel/sentinel.conf >/dev/null 2>&1
 cat << EOF > /root/.sparkscore/sentinel/sentinel.conf
 # specify path to dash.conf or leave blank
 # default is the same as DashCore
-dash_conf=/root/.sparkscore/sparks.conf
+#dash_conf=/root/.sparkscore/sparks.conf
+sparks_conf=/root/.sparkscore/sparks.conf
 
 # valid options are mainnet, testnet (default=mainnet)
 network=mainnet
