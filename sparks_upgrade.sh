@@ -44,7 +44,7 @@ purgeOldInstallation() {
       #  sudo rm -rf ~/.Sparks > /dev/null 2>&1
       mv /root/.Sparks /root/.sparkscore > /dev/null 2>&1
       mv /root/.sparkscore/Sparks.conf /root/.sparkscore/sparks.conf  > /dev/null 2>&1
-      rm -r /root/.sparkscore/sentinal > /dev/null 2>&1
+      rm -r /root/.sparkscore/sentinel > /dev/null 2>&1
       echo -e "${GREEN}do quick cleanup${NC}"
       rm /root/.sparkscore/sentinel.log > /dev/null 2>&1
       rm /root/.sparkscore/debug.log > /dev/null 2>&1
