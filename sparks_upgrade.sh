@@ -10,7 +10,7 @@ COIN_REPO='https://github.com/SparksReborn/sparkspay.git'
 COIN_TGZ='https://github.com/SparksReborn/sparkspay/releases/download/v0.12.3.1/sparkscore-0.12.3.1-linux64.tar.gz'
 COIN_BOOTSTRAP='https://github.com/SparksReborn/sparkspay/releases/download/v0.12.2.5/bootstrap.dat'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-SENTINEL_REPO='https://github.com/sparkscrypto/sentinel'
+SENTINEL_REPO='https://github.com/SparksReborn/sentinel'
 COIN_NAME='sparks'
 COIN_PORT=8890
 RPC_PORT=8818
@@ -64,10 +64,13 @@ function download_node() {
 function install_sentinel() {
   echo -e "${GREEN}Installing sentinel.${NC}"
 if [ -d "$CONFIGFOLDER/sentinal" ]; then
-  echo  "* * * * * cd $CONFIGFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $CONFIGFOLDER/sentinel.log 2>&1" > $CONFIGFOLDER/$COIN_NAME.cron
-  crontab $CONFIGFOLDER/$COIN_NAME.cron
-  rm $CONFIGFOLDER/$COIN_NAME.cron >/dev/null 2>&1
-else
+#Sentinal repo changed, purge old install
+rm -r $CONFIGFOLDER/sentinal >/dev/null 2>&1
+#  echo  "* * * * * cd $CONFIGFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $CONFIGFOLDER/sentinel.log 2>&1" > $CONFIGFOLDER/$COIN_NAME.cron
+# crontab $CONFIGFOLDER/$COIN_NAME.cron
+# rm $CONFIGFOLDER/$COIN_NAME.cron >/dev/null 2>&1
+#else
+fi
   apt-get -y install python-virtualenv virtualenv >/dev/null 2>&1
   git clone $SENTINEL_REPO $CONFIGFOLDER/sentinel >/dev/null 2>&1
   cd $CONFIGFOLDER/sentinel
@@ -76,7 +79,7 @@ else
   echo  "* * * * * cd $CONFIGFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $CONFIGFOLDER/sentinel.log 2>&1" > $CONFIGFOLDER/$COIN_NAME.cron
   crontab $CONFIGFOLDER/$COIN_NAME.cron
   rm $CONFIGFOLDER/$COIN_NAME.cron >/dev/null 2>&1
-fi
+#fi
 
 }
 
