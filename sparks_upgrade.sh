@@ -29,7 +29,11 @@ MAG='\e[1;35m'
 
 
 purgeOldInstallation() {
-    echo -e "${GREEN}Searching and moving old $COIN_NAME files and configurations${NC}"
+  echo -e "${GREEN}Sparks Masternode Auto Upgrade script"
+  echo -e "${GREEN}Original script by ${RED}Bit_Yoda${GREEN}, This Upgrade script smashed together by ${RED}DrWeez"
+  echo -e "${GREEN}Hold onto your hat..  starting with $COIN_NAME Daemon $COIN_VERSION${NC}"
+  echo
+  echo -e "${GREEN}Searching and moving old ${RED}$COIN_NAME ${GREEN}files and configurations${NC}"
     #kill wallet daemon
     systemctl stop Sparks > /dev/null 2>&1
     sudo killall Sparksd > /dev/null 2>&1
