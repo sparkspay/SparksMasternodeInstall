@@ -31,7 +31,7 @@ MAG='\e[1;35m'
 purgeOldInstallation() {
   echo -e "${GREEN}Sparks Masternode Auto Upgrade script"
   echo -e "${GREEN}Original script by ${RED}Bit_Yoda${GREEN}, This Upgrade script smashed together by ${RED}DrWeez"
-  echo -e "${GREEN}Hold onto your hat..  starting with $COIN_NAME Daemon $COIN_VERSION${NC}"
+  echo -e "${GREEN}Hold onto your hat..  starting with $COIN_NAME Daemon $COIN_VERSION${NC} upgrade"
   echo
   echo -e "${GREEN}Searching and moving old ${RED}$COIN_NAME ${GREEN}files and configurations${NC}"
     #kill wallet daemon
@@ -190,24 +190,24 @@ fi
 
 function prepare_system() {
 echo -e "Checking and upgrading the VPS for ${CYAN}$COIN_NAME${NC} ${RED}Masternode${NC}"
-echo -e "${RED}Start Update"
-apt-get update >/dev/null 2>&1
-echo -e "${RED}Update done"
-echo -e "${RED}Starting Upgrade, could take some time "
-apt -y dist-upgrade  >/dev/null 2>&1
-echo -e "${RED}Upgrade done"
+echo -e "${RED}Start VPS Update"
+DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
+echo -e "${RED}VPS Update done"
+echo -e "${RED}Starting VPS Upgrade, this step could take some time"
+DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
+#apt -y dist-upgrade  >/dev/null 2>&1
+DEBIAN_FRONTEND=noninteractive apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq dist-upgrade
+echo -e "${RED}VPS dist Upgrade done"
 apt -y autoremove >/dev/null 2>&1
 echo -e "${RED}Auto Remove done"
 echo -e "${GREEN}almost there...."
-DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
-DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
 apt install -y software-properties-common >/dev/null 2>&1
 echo -e "${PURPLE}Adding bitcoin PPA repository"
 apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
 echo -e "${RED}Installing / Upgrading required packages, it may take some time to finish.${NC}"
 apt-get update >/dev/null 2>&1
 apt-get install libzmq3-dev -y >/dev/null 2>&1
-echo -e "${RED}Last batch of upgrade checks"
+echo -e "${RED}Last batch of VPS upgrade checks"
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
 build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
 libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
