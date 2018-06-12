@@ -41,6 +41,10 @@ purgeOldInstallation() {
       mv /root/.Sparks /root/.sparkscore > /dev/null 2>&1
       mv /root/.sparkscore/Sparks.conf /root/.sparkscore/sparks.conf  > /dev/null 2>&1
       rm -r /root/.sparkscore/sentinal > /dev/null 2>&1
+      #do quick cleanup
+      rm /root/.sparkscore/sentinel.log > /dev/null 2>&1
+      rm /root/.sparkscore/debug.log > /dev/null 2>&1
+      rm /root/.sparkscore/bootstrap.dat.old > /dev/null 2>&1
     fi
     #remove binaries and Sparks utilities
     cd /usr/local/bin && sudo rm Sparks-cli Sparks-tx Sparksd > /dev/null 2>&1 && cd
