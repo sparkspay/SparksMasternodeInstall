@@ -41,12 +41,12 @@ purgeOldInstallation() {
       mv /root/.Sparks /root/.sparkscore > /dev/null 2>&1
       mv /root/.sparkscore/Sparks.conf /root/.sparkscore/sparks.conf  > /dev/null 2>&1
       rm -r /root/.sparkscore/sentinal > /dev/null 2>&1
-      echo "${GREEN}do quick cleanup${NC}"
+      echo -e "${GREEN}do quick cleanup${NC}"
       rm /root/.sparkscore/sentinel.log > /dev/null 2>&1
       rm /root/.sparkscore/debug.log > /dev/null 2>&1
       rm /root/.sparkscore/bootstrap.dat.old > /dev/null 2>&1
     fi
-    echo "${GREEN} remove binaries and Sparks utilities${NC}"
+    echo -e "${GREEN} remove binaries and Sparks utilities${NC}"
     cd /usr/local/bin && sudo rm Sparks-cli Sparks-tx Sparksd > /dev/null 2>&1 && cd
     cd /usr/bin && sudo rm Sparks-cli Sparks-tx Sparksd > /dev/null 2>&1 && cd
     echo -e "${GREEN}* Done${NONE}";
@@ -188,21 +188,21 @@ fi
 function prepare_system() {
 echo -e "Checking and upgrading the VPS for ${CYAN}$COIN_NAME${NC} ${RED}Masternode${NC}"
 apt-get update >/dev/null 2>&1
-echo -e "update done"
+echo -e "${RED}Update done"
 apt -y dist-upgrade  >/dev/null 2>&1
-echo -e "Upgrade done"
+echo -e "${RED}Upgrade done"
 apt -y autoremove >/dev/null 2>&1
-echo -e "Auto Remove done"
+echo -e "${RED}Auto Remove done"
+echo -e "${GREEN}almost there...."
 DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
 apt install -y software-properties-common >/dev/null 2>&1
 echo -e "${PURPLE}Adding bitcoin PPA repository"
 apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
-echo -e "Installing / Upgrading required packages, it may take some time to finish.${NC}"
+echo -e "${RED}Installing / Upgrading required packages, it may take some time to finish.${NC}"
 apt-get update >/dev/null 2>&1
 apt-get install libzmq3-dev -y >/dev/null 2>&1
-echo -e "Last batch of upgrade checks"
-echo -e "${PURPLE}almost there...."
+echo -e "${RED}Last batch of upgrade checks"
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
 build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
 libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
