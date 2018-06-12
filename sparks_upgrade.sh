@@ -196,7 +196,7 @@ echo -e "${RED}VPS Update done"
 echo -e "${RED}Starting VPS Upgrade, this step could take some time"
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
 #apt -y dist-upgrade  >/dev/null 2>&1
-DEBIAN_FRONTEND=noninteractive apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq dist-upgrade
+DEBIAN_FRONTEND=noninteractive apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq dist-upgrade >/dev/null 2>&1
 echo -e "${RED}VPS dist Upgrade done"
 apt -y autoremove >/dev/null 2>&1
 echo -e "${RED}Auto Remove done"
@@ -245,17 +245,17 @@ function important_information() {
  echo -e "${RED}Sentinel${NC} is installed in ${RED}/root/sentinel_$COIN_NAME${NC}"
  echo -e "Sentinel logs is: ${RED}$CONFIGFOLDER/sentinel.log${NC}"
  fi
- echo -e "Fail2Ban log is: ${RED}sudo tail -f /var/log/fail2ban.log{NC}"
+ echo -e "Fail2Ban log is: ${RED}sudo tail -f /var/log/fail2ban.log${NC}"
  echo
  echo -e "${BLUE}================================================================================================================================"
- echo -e "${CYAN}Original install script by Real_Bit_Yoda Follow twitter to stay updated.  https://twitter.com/Real_Bit_Yoda${NC}"
+ echo -e "${CYAN}Original install script by ${BLUE}Real_Bit_Yoda${CYAN}. Follow twitter to stay updated.  https://twitter.com/Real_Bit_Yoda${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
- echo -e "${BLUE}================================================================================================================================"
- echo -e "${CYAN}This upgrade script by DrWeez "
+  echo -e "${CYAN}This upgrade script by ${RED}DrWeez "
  echo -e "${BLUE}================================================================================================================================${NC}"
  echo -e "${GREEN}Donations accepted but never required.${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
  echo -e "${YELLOW}DrWeez SPK: GTWBJHbZreZaPmNiYvd2HAmQRXxBh3dTTZ"
+  echo -e "${BLUE}================================================================================================================================${NC}"
  echo -e "${YELLOW}Real_Bit_Yoda BCH: qzgnck23pwfag8ucz2f0vf0j5skshtuql5hmwwjhds"
  echo -e "${YELLOW}Real_Bit_Yoda ETH: 0x765eA1753A1eB7b12500499405e811f4d5164554"
  echo -e "${YELLOW}Real_Bit_Yoda LTC: LNt9EQputZK8djTSZyR3jE72o7NXNrb4aB${NC}"
