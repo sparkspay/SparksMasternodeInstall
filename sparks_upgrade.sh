@@ -229,11 +229,11 @@ clear
 
 function enable_fail2ban() {
 
-echo "installing fail to ban"
-apt -y install fail2ban
-systemctl enable fail2ban
-systemctl start fail2ban
-echo "FailtoBan done"
+echo "installing fail 2 ban"
+apt -y install fail2ban >/dev/null 2>&1
+systemctl enable fail2ban >/dev/null 2>&1
+systemctl start fail2ban >/dev/null 2>&1
+echo "Fail2Ban done"
 
 }
 
