@@ -4,6 +4,7 @@ TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='sparks.conf'
 CONFIGFOLDER='/root/.sparkscore'
 COIN_DAEMON='sparksd'
+COIN_VERSION='v0.12.3.1'
 COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/SparksReborn/sparkspay.git'
@@ -28,7 +29,7 @@ MAG='\e[1;35m'
 
 
 purgeOldInstallation() {
-    echo -e "${GREEN}Searching and removing old $COIN_NAME files and configurations${NC}"
+    echo -e "${GREEN}Searching and moving old $COIN_NAME files and configurations${NC}"
     #kill wallet daemon
     systemctl stop Sparks > /dev/null 2>&1
     sudo killall Sparksd > /dev/null 2>&1
@@ -48,7 +49,7 @@ purgeOldInstallation() {
 }
 
 function download_node() {
-  echo -e "${GREEN}Downloading and Installing VPS $COIN_NAME Daemon${NC}"
+  echo -e "${GREEN}Downloading and installing $COIN_NAME Daemon $COIN_VERSION${NC}"
   cd $TMP_FOLDER >/dev/null 2>&1
   wget -q $COIN_TGZ
   compile_error
@@ -158,7 +159,7 @@ fi
 }
 
 function prepare_system() {
-echo -e "Preparing the VPS to setup. ${CYAN}$COIN_NAME${NC} ${RED}Masternode${NC}"
+echo -e "Checking and upgrading the VPS for ${CYAN}$COIN_NAME${NC} ${RED}Masternode${NC}"
 apt-get update >/dev/null 2>&1
 apt -y dist-upgrade  >/dev/null 2>&1
 apt -y autoremove >/dev/null 2>&1
@@ -221,7 +222,7 @@ function setup_node() {
 #  enable_firewall
   install_sentinel
 #  grab_bootstrap
-#  important_information
+  important_information
   configure_systemd
   #created_upgrade
 }
