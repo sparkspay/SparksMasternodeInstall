@@ -97,10 +97,9 @@ function install_sentinel() {
 }
 
 function configure_sentinel {
-rm /root/.sparkscore/sentinel/sentinel.config >/dev/null 2>&1
-touch /root/.sparkscore/sentinel/sentinel.config >/dev/null 2>&1
-cat << EOF > /root/.sparkscore/sentinel/sentinel.config
-
+rm /root/.sparkscore/sentinel/sentinel.conf >/dev/null 2>&1
+touch /root/.sparkscore/sentinel/sentinel.conf >/dev/null 2>&1
+cat << EOF > /root/.sparkscore/sentinel/sentinel.conf
 # specify path to dash.conf or leave blank
 # default is the same as DashCore
 dash_conf=/root/.sparkscore/sparks.conf
@@ -191,8 +190,10 @@ fi
 
 function prepare_system() {
 echo -e "Checking and upgrading the VPS for ${CYAN}$COIN_NAME${NC} ${RED}Masternode${NC}"
+echo -e "${RED}Start Update"
 apt-get update >/dev/null 2>&1
 echo -e "${RED}Update done"
+echo -e "${RED}Starting Upgrade, could take some time "
 apt -y dist-upgrade  >/dev/null 2>&1
 echo -e "${RED}Upgrade done"
 apt -y autoremove >/dev/null 2>&1
