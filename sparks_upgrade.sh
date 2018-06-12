@@ -27,7 +27,7 @@ NC='\033[0m'
 MAG='\e[1;35m'
 
 
-function purgeOldInstallation() {
+purgeOldInstallation() {
     echo -e "${GREEN}Searching and removing old $COIN_NAME files and configurations${NC}"
     #kill wallet daemon
     systemctl stop Sparks > /dev/null 2>&1
@@ -206,6 +206,8 @@ function important_information() {
  echo -e "${YELLOW}Real_Bit_Yoda ETH: 0x765eA1753A1eB7b12500499405e811f4d5164554"
  echo -e "${YELLOW}Real_Bit_Yoda LTC: LNt9EQputZK8djTSZyR3jE72o7NXNrb4aB${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
+
+}
 
 function setup_node() {
   #get_ip
