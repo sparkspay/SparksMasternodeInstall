@@ -35,10 +35,11 @@ purgeOldInstallation() {
     #remove old ufw port allow
     #sudo ufw delete allow 8890/tcp > /dev/null 2>&1
     #remove old files
-    if [ -d "~/.Sparks" ]; then
+    if [ -d "/root/.Sparks" ]; then
       #  sudo rm -rf ~/.Sparks > /dev/null 2>&1
-      mv /root/.Sparks /root/.sparkscore  > /dev/null 2>&1
-      mv ~/.sparkscore/Sparks.conf ~/.sparkscore/sparks.conf  > /dev/null 2>&1
+      mv /root/.Sparks /root/.sparkscore > /dev/null 2>&1
+      mv /root/.sparkscore/Sparks.conf /root/.sparkscore/sparks.conf  > /dev/null 2>&1
+      rm -r /root/.sparkscore/sentinal > /dev/null 2>&1
     fi
     #remove binaries and Sparks utilities
     cd /usr/local/bin && sudo rm Sparks-cli Sparks-tx Sparksd > /dev/null 2>&1 && cd
@@ -52,7 +53,7 @@ function download_node() {
   wget -q $COIN_TGZ
   compile_error
   tar xvzf $COIN_ZIP >/dev/null 2>&1
-  cd Sparkscore-0.12.3/bin
+  cd sparkscore-0.12.3/bin
   chmod +x $COIN_DAEMON $COIN_CLI
   cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   #cp sparks* $COIN_PATH
@@ -63,14 +64,17 @@ function download_node() {
 
 function install_sentinel() {
   echo -e "${GREEN}Installing sentinel.${NC}"
-if [ -d "$CONFIGFOLDER/sentinal" ]; then
+#if [ -d "$CONFIGFOLDER/sentinal" ]; then
 #Sentinal repo changed, purge old install
-rm -r $CONFIGFOLDER/sentinal >/dev/null 2>&1
+
+##moved to purge
+
+#rm -r $CONFIGFOLDER/sentinal >/dev/null 2>&1
 #  echo  "* * * * * cd $CONFIGFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $CONFIGFOLDER/sentinel.log 2>&1" > $CONFIGFOLDER/$COIN_NAME.cron
 # crontab $CONFIGFOLDER/$COIN_NAME.cron
 # rm $CONFIGFOLDER/$COIN_NAME.cron >/dev/null 2>&1
 #else
-fi
+#fi
   apt-get -y install python-virtualenv virtualenv >/dev/null 2>&1
   git clone $SENTINEL_REPO $CONFIGFOLDER/sentinel >/dev/null 2>&1
   cd $CONFIGFOLDER/sentinel
@@ -163,7 +167,7 @@ DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o D
 apt install -y software-properties-common >/dev/null 2>&1
 echo -e "${PURPLE}Adding bitcoin PPA repository"
 apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
-echo -e "Installing required packages, it may take some time to finish.${NC}"
+echo -e "Installing / Upgrading required packages, it may take some time to finish.${NC}"
 apt-get update >/dev/null 2>&1
 apt-get install libzmq3-dev -y >/dev/null 2>&1
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
