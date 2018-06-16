@@ -6,7 +6,7 @@
 # https://github.com/SparksReborn/SparksMasternodeInstall
 
 #added fail to FailtoBan
-#added creation of upgrade.sh because i am LAZY :D 
+#added creation of upgrade.sh because i am LAZY :D
 
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='sparks.conf'
@@ -255,6 +255,8 @@ echo -e "Preparing the VPS to setup. ${CYAN}$COIN_NAME${NC} ${RED}Masternode${NC
 apt-get update >/dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
+#I like to do dist-upgrade on fresh vps
+DEBIAN_FRONTEND=noninteractive apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq dist-upgrade >/dev/null 2>&1
 apt install -y software-properties-common >/dev/null 2>&1
 echo -e "${PURPLE}Adding bitcoin PPA repository"
 apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
