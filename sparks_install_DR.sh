@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# This is a custom version for my own deployments
+
+# please use official version
+# https://github.com/SparksReborn/SparksMasternodeInstall
+
+#added fail to FailtoBan
+#added creation of upgrade.sh because i am LAZY :D 
+
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='sparks.conf'
 CONFIGFOLDER='/root/.sparkscore'
@@ -20,7 +28,7 @@ NODEIP=$(curl -s4 icanhazip.com)
 
 BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
-CYAN="\033[0;36m" 
+CYAN="\033[0;36m"
 PURPLE="\033[0;35m"
 RED='\033[0;31m'
 GREEN="\033[0;32m"
@@ -130,6 +138,18 @@ EOF
 function grab_bootstrap() {
 cd $CONFIGFOLDER
   wget -q $COIN_BOOTSTRAP
+}
+
+function created_upgrade() {
+#DrWeez IS JUST LAZY
+cd
+cat << EOF > upgrade.sh
+  #!/bin/bash
+  sudo apt update
+  sudo apt -y dist-upgrade
+  sudo apt -y autoremove
+EOF
+
 }
 
 function create_key() {
@@ -260,6 +280,16 @@ fi
 clear
 }
 
+Function enable_fail2ban() {
+
+echo "installing fail to ban"
+apt -y install fail2ban >/dev/null 2>&1
+systemctl enable fail2ban >/dev/null 2>&1
+systemctl start fail2ban >/dev/null 2>&1
+echo "FailtoBan done"
+
+}
+
 function important_information() {
  echo
  echo -e "${BLUE}================================================================================================================================${NC}"
@@ -300,6 +330,8 @@ function setup_node() {
   install_sentinel
   important_information
   configure_systemd
+  created_upgrade
+  enable_fail2ban
 }
 
 
@@ -311,4 +343,3 @@ checks
 prepare_system
 download_node
 setup_node
-
