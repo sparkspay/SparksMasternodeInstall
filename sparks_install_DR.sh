@@ -282,13 +282,13 @@ fi
 clear
 }
 
-Function enable_fail2ban() {
+function enable_fail2ban() {
 
-echo "installing fail to ban"
+echo -e "${PURPLE}Installing fail to ban"
 apt -y install fail2ban >/dev/null 2>&1
 systemctl enable fail2ban >/dev/null 2>&1
 systemctl start fail2ban >/dev/null 2>&1
-echo "FailtoBan done"
+echo -e "${PURPLE}FailtoBan done"
 
 }
 
