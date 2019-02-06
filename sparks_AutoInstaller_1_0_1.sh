@@ -7,11 +7,8 @@
 #|__:___/ |___|    |___|   ||   |___\|      \|__:___/
 #   :                  |___||___|    |___\  /   :
 #  v 1.0.1                                \/ '
-# This is a custom version for my own deployments
 
-# please use official version
-# https://github.com/SparksReborn/SparksMasternodeInstall
-
+#ChangeLOG
 #V 1.01
 #updated COIN_VERSION
 #updated COIN_TGZ
@@ -19,7 +16,6 @@
 #added clean up COIN_EPATH
 #removed root user check
 #updated to new GIT
-
 
 #V1.0.0
 #first releases
@@ -36,8 +32,6 @@
 #useradd -m -s /bin/bash -G adm,systemd-journal,sudo $USERNAME && passwd $USERNAME
 #su $USERNAME
 #cd ~/
-
-
 
 USER=$USER
 TMP_FOLDER=$(mktemp -d)
@@ -384,7 +378,7 @@ masternodeprivkey=$COINKEY
 #ADDNODES
 
 #disable log for cheap VPS
-printtodebuglog=0
+#printtodebuglog=0
 
 EOF
 }
