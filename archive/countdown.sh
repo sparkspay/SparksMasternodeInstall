@@ -2,6 +2,7 @@
 STIL_BUSY=true
 mnsync=false
 function check_blocks(){
+
 cd
 echo Getting current network block..
 wget http://explorer.sparkscoin.io/api/getblockcount -O getblockcount
