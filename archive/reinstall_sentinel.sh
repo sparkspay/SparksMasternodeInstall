@@ -1,4 +1,6 @@
 #!/bin/bash
+
+#
 SPARKS_LOC='/root/.sparkscore'
 
 rm -r $SPARKS_LOC/sentinel > /dev/null 2>&1

@@ -4,13 +4,14 @@ TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='sparks.conf'
 CONFIGFOLDER='/root/.sparkscore'
 COIN_DAEMON='sparksd'
+COIN_VERSION='v0.12.3.2'
 COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/SparksReborn/sparkspay.git'
-COIN_TGZ='https://github.com/SparksReborn/sparkspay/releases/download/v0.12.3.1/sparkscore-0.12.3.1-linux64.tar.gz'
-COIN_BOOTSTRAP='https://github.com/SparksReborn/sparkspay/releases/download/v0.12.2.5/bootstrap.dat'
+COIN_TGZ='https://github.com/SparksReborn/sparkspay/releases/download/v0.12.3.2/sparkscore-0.12.3.2-linux64.tar.gz'
+COIN_BOOTSTRAP='https://github.com/SparksReborn/sparkspay/releases/download/bootstrap/bootstrap.dat'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-SENTINEL_REPO='https://github.com/SparksReborn/sentinel'
+SENTINEL_REPO='https://github.com/SparksReborn/sentinel.git'
 COIN_NAME='sparks'
 COIN_PORT=8890
 RPC_PORT=8818
@@ -19,7 +20,7 @@ NODEIP=$(curl -s4 icanhazip.com)
 
 BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
-CYAN="\033[0;36m"
+CYAN="\033[0;36m" 
 PURPLE="\033[0;35m"
 RED='\033[0;31m'
 GREEN="\033[0;32m"
@@ -29,15 +30,17 @@ MAG='\e[1;35m'
 purgeOldInstallation() {
     echo -e "${GREEN}Searching and removing old $COIN_NAME files and configurations${NC}"
     #kill wallet daemon
-    sudo killall Sparksd > /dev/null 2>&1
+    systemctl stop $COIN_NAME.service > /dev/null 2>&1
+    sudo killall $COIN_DAEMON > /dev/null 2>&1
     #remove old ufw port allow
     sudo ufw delete allow 8890/tcp > /dev/null 2>&1
     #remove old files
-    if [ -d "~/.Sparks" ]; then
-        sudo rm -rf ~/.Sparks > /dev/null 2>&1
-    fi
+	rm /root/$CONFIGFOLDER/bootstrap.dat.old > /dev/null 2>&1
+	cd /usr/local/bin && sudo rm $COIN_CLI $COIN_DAEMON > /dev/null 2>&1 && cd
+    cd /usr/bin && sudo rm $COIN_CLI $COIN_DAEMON > /dev/null 2>&1 && cd
+        sudo rm -rf ~/$CONFIGFOLDER > /dev/null 2>&1
     #remove binaries and Sparks utilities
-    cd /usr/local/bin && sudo rm Sparks-cli Sparks-tx Sparksd > /dev/null 2>&1 && cd
+    cd /usr/local/bin && sudo rm sparks-cli sparks-tx sparksd > /dev/null 2>&1 && cd
     echo -e "${GREEN}* Done${NONE}";
 }
 
@@ -59,7 +62,7 @@ function download_node() {
   wget -q $COIN_TGZ
   compile_error
   tar xvzf $COIN_ZIP >/dev/null 2>&1
-  cd Sparkscore-0.12.2/bin
+  cd sparkscore-0.12.3/bin
   chmod +x $COIN_DAEMON $COIN_CLI
   cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   cd ~ >/dev/null 2>&1
@@ -107,18 +110,6 @@ EOF
   fi
 }
 
-
-function created_upgrade() {
-#DrWeez IS JUST LAZY
-cd
-cat << EOF > upgrade.sh
-  #!/bin/bash
-  sudo apt update
-  sudo apt -y dist-upgrade
-  sudo apt -y autoremove
-EOF
-
-}
 
 function create_config() {
   mkdir $CONFIGFOLDER >/dev/null 2>&1
@@ -173,9 +164,6 @@ masternode=1
 externalip=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
 
-#Temp
-printtodebuglog=0
-
 #ADDNODES
 
 EOF
@@ -191,15 +179,6 @@ function enable_firewall() {
   echo "y" | ufw enable >/dev/null 2>&1
 }
 
-Function enable_fail2ban() {
-
-echo "installing fail to ban"
-apt -y install fail2ban
-systemctl enable fail2ban
-systemctl start fail2ban
-echo "FailtoBan done"
-
-}
 
 function get_ip() {
   declare -a NODE_IPS
@@ -284,31 +263,31 @@ clear
 function important_information() {
  echo
  echo -e "${BLUE}================================================================================================================================${NC}"
- echo -e "${PURPLE}Windows Wallet Guide. https://github.com/Realbityoda/Sparks/blob/master/README.md${NC}"
+ echo -e "${PURPLE}Windows Wallet Guide. https://github.com/Sparks/master/README.md${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
- echo -e "$COIN_NAME Masternode is up and running listening on port ${GREEN}$COIN_PORT${NC}."
- echo -e "Configuration file is: ${RED}$CONFIGFOLDER/$CONFIG_FILE${NC}"
- echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}"
- echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}"
- echo -e "VPS_IP:PORT ${GREEN}$NODEIP:$COIN_PORT${NC}"
- echo -e "MASTERNODE GENKEY is: ${RED}$COINKEY${NC}"
- echo -e "Please check ${RED}$COIN_NAME${NC} is running with the following command: ${RED}systemctl status $COIN_NAME.service${NC}"
- echo -e "Use ${RED}$COIN_CLI masternode status${NC} to check your MN."
+ echo -e "${GREEN}$COIN_NAME Masternode is up and running listening on port${NC}${PURPLE}$COIN_PORT${NC}."
+ echo -e "${GREEN}Configuration file is:${NC}${RED}$CONFIGFOLDER/$CONFIG_FILE${NC}"
+ echo -e "${GREEN}Start:${NC}${RED}systemctl start $COIN_NAME.service${NC}"
+ echo -e "${GREEN}Stop:${NC}${RED}systemctl stop $COIN_NAME.service${NC}"
+ echo -e "${GREEN}VPS_IP:PORT${NC}${GREEN}$NODEIP:$COIN_PORT${NC}"
+ echo -e "${GREEN}MASTERNODE GENKEY is:${NC}${PURPLE}$COINKEY${NC}"
  if [[ -n $SENTINEL_REPO  ]]; then
  echo -e "${RED}Sentinel${NC} is installed in ${RED}/root/sentinel_$COIN_NAME${NC}"
  echo -e "Sentinel logs is: ${RED}$CONFIGFOLDER/sentinel.log${NC}"
  fi
- echo -e "Fail2Ban log is: ${RED}sudo tail -f /var/log/fail2ban.log{NC}"
  echo -e "${BLUE}================================================================================================================================"
  echo -e "${CYAN}Follow twitter to stay updated.  https://twitter.com/Real_Bit_Yoda${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
- echo -e "${GREEN}Donations accepted but never required.${NC}"
+ echo -e "${CYAN}Ensure Node is fully SYNCED with BLOCKCHAIN.${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
- echo -e "${YELLOW}BCH: qzgnck23pwfag8ucz2f0vf0j5skshtuql5hmwwjhds"
- echo -e "${YELLOW}ETH: 0x765eA1753A1eB7b12500499405e811f4d5164554"
- echo -e "${YELLOW}LTC: LNt9EQputZK8djTSZyR3jE72o7NXNrb4aB${NC}"
+ echo -e "${GREEN}Usage Commands.${NC}"
+ echo -e "${GREEN}sparks-cli masternode status${NC}"
+ echo -e "${GREEN}sparks-cli getinfo.${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
-# echo -e "${RED}tweaks by DrWeez for deploymnets on arubacloud.com "
+ echo -e "${RED}Donations always excepted gratefully.${NC}"
+ echo -e "${BLUE}================================================================================================================================${NC}"
+ echo -e "${YELLOW}Spks: GPMVqCBk4KXXC2n2HMeqtYqjTKZwTZYqy2${NC}"
+ echo -e "${BLUE}================================================================================================================================${NC}"
 }
 
 function setup_node() {
@@ -317,12 +296,10 @@ function setup_node() {
   create_key
   update_config
   enable_firewall
-  enable_fail2ban
-  install_sentinel
   grab_bootstrap
+  install_sentinel
   important_information
   configure_systemd
-  created_upgrade
 }
 
 
@@ -334,3 +311,4 @@ checks
 prepare_system
 download_node
 setup_node
+

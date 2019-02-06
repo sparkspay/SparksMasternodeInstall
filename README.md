@@ -1,14 +1,14 @@
 ![Example-Logo](https://i.imgur.com/IPrlf78.png)
-# Sparks Masternode Setup Guide (Ubuntu 16.04)
-This guide will assist you in setting up a Sparks Masternode on a Linux Server running Ubuntu 16.04. (Use at your own risk)
+# Sparks Masternode Setup Guide (Ubuntu 16.04 and 18.04)
+This guide will assist you in setting up a Sparks Masternode on a Linux Server running Ubuntu 16.04 or 16.04. (Use at your own risk)
 
-If you require further assistance contact the support team @ [Discord](https://discord.gg/WacZZWb)
+If you require further assistance contact the support team @ [Discord](https://discord.gg/6ktdN8Z)
 ***
 ## Requirements
 1) **1,000 Sparks coins.**
-2) **A Vultr VPS running Linux Ubuntu 16.04.**
+2) **Any VPS running Linux Ubuntu 16.04 or 18.04**
 3) **A Windows local wallet.**
-4) **An SSH client such as [Bitvise](https://dl.bitvise.com/BvSshClient-Inst.exe)**
+4) **An SSH client such as kitty or putty**
 ***
 ## Contents
 * **Section A**: Creating the VPS within [Vultr](https://www.vultr.com/?ref=7296974).
