@@ -50,7 +50,7 @@ COIN_TGZ='https://github.com/sparkspay/sparks/releases/download/v0.12.3.4/sparks
 COIN_EPATH='sparkscore-0.12.3/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-SENTINEL_REPO='https://github.com/SparksReborn/sentinel.git'
+SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
 COIN_NAME='sparks'
 COIN_PORT=8890
 RPC_PORT=8818
@@ -270,9 +270,12 @@ function created_upgrade() {
 cd
 cat << EOF > upgrade.sh
   #!/bin/bash
+  #sudo apt-get clean -y
+  #free up space first
+  sudo apt -y autoremove --purge
   sudo apt update
   sudo apt -y dist-upgrade
-  sudo apt -y autoremove
+
 
 EOF
 }
@@ -772,6 +775,9 @@ function upgrade_node() {
 if [[ $ADVANCE == '1' ]]; then
   echo -e "${GREEN}Upgrading the VPS.${NC}"
   echo -e "${GREEN}Estimated run time for the following three steps is 5 min  ${NC}"
+#Free up space before upgrade
+# sudo apt -y autoremove --purge
+  sudo DEBIAN_FRONTEND=noninteractive apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq autoremove --purge >/dev/null 2>&1
   sudo DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
   echo -e "${GREEN} Step 1 / 3 ${RED}apt-get update ${GREEN}done ${NC}"
   sudo DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
