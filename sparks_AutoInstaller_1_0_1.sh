@@ -273,6 +273,7 @@ cat << EOF > upgrade.sh
   sudo apt update
   sudo apt -y dist-upgrade
   sudo apt -y autoremove
+
 EOF
 }
 
@@ -768,7 +769,7 @@ fi
 }
 
 function upgrade_node() {
-
+if [[ $ADVANCE == '1' ]]; then
   echo -e "${GREEN}Upgrading the VPS.${NC}"
   echo -e "${GREEN}Estimated run time for the following three steps is 5 min  ${NC}"
   sudo DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
@@ -780,6 +781,9 @@ function upgrade_node() {
   echo -e " "
   echo -e "${GREEN}Ubuntu Upgrade Complete! ${NC}"
   echo -e " "
+else
+echo -e "${GREEN}Skipping Ubuntu Upgrade! ${NC}"
+fi
   echo -e "${GREEN}Start clean up ${NC}"
   sudo systemctl stop $COIN_NAME.service > /dev/null 2>&1
   sudo killall $COIN_DAEMON > /dev/null 2>&1
