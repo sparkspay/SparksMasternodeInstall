@@ -136,6 +136,7 @@ purgeOldInstallation() {
       #sudo rm ~/$CONFIGFOLDER/$COIN_NAME.service > /dev/null 2>&1
       #delete whole sparks folder
       sudo rm -rf /$CONFIGFOLDER > /dev/null 2>&1
+
     fi
 
 }
@@ -802,8 +803,11 @@ fi
   sudo rm -rf $COIN_EPATH >/dev/null 2>&1
   #rename the info file for info
   sudo mv $HOMEPATH/$COIN_NAME.info $HOMEPATH/$COIN_NAME.info.old >/dev/null 2>&1
+  #Remove old sentinel and install from new repo
+  sudo rm -rf $CONFIGFOLDER/sentinel > /dev/null 2>&1
 
   download_node
+  install_sentinel
 
   sudo systemctl start $COIN_NAME.service >/dev/null 2>&1
 }
