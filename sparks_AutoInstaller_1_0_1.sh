@@ -64,7 +64,7 @@ HOMEPATH=''
 CONFIGFOLDER=''
 UPGRADESPARKS='false'
 CLEANSPARKS='false'
-ADVANCE='1'
+ADVANCE='0'
 
 NODEIP=$(curl -s4 icanhazip.com)
 
@@ -116,7 +116,7 @@ pause
 }
 
 purgeOldInstallation() {
-    echo -e "${GREEN}Cleaning up old $COIN_NAME files${NC}"
+    echo -e "${GREEN}Looking for and Cleaning up old files${NC}"
     #kill wallet daemon
     sudo systemctl stop $COIN_NAME.service > /dev/null 2>&1
     sudo killall $COIN_DAEMON > /dev/null 2>&1
@@ -268,16 +268,14 @@ cd $CONFIGFOLDER
 function created_upgrade() {
 #use this upgrasde script to keep your VPS up to date
 #to run -> $ bash upgrade.sh
-cd
+#cd
+#cd && sudo rm upgrade.sh >/dev/null 2>&1
 cat << EOF > upgrade.sh
   #!/bin/bash
-  #sudo apt-get clean -y
-  #free up space first
+  sudo apt-get clean -y
   sudo apt -y autoremove --purge
   sudo apt update
-  sudo apt -y dist-upgrade
-
-
+  sudo apt -y dist-upgrade --purge
 EOF
 }
 
@@ -341,9 +339,9 @@ function secure_vps_ssh() {
 
     sudo systemctl restart sshd >/dev/null 2>&1
 
-    echo -e "${RED}THE VPS is Secured with SSH-RSA KEY. TEST access BEFORE you disconect${$NC}"
-    echo -e "${RED}after you have tested conncting with key  ${$NC}"
-    echo -e "${RED}Press [Enter] key to continue... ${$NC}"
+    echo -e "${RED}THE VPS is Secured with SSH-RSA KEY. TEST access BEFORE you disconect${NC}"
+    echo -e "${RED}after you have tested conncting with key  ${NC}"
+    echo -e "${RED}Press [Enter] key to continue... ${NC}"
 #add undo option if test fails
 pause
   fi
@@ -660,7 +658,6 @@ function check_mnstart() {
 function information() {
   clear
   cat << EOF >> $HOMEPATH/$COIN_NAME.info
-
 .________._______ .______  .______  .____/\ .________
 |    ___/: ____  |:      \ : __   \ :   /  \|    ___/
 |___    \|    :  ||   .   ||  \____||.  ___/|___    \
@@ -712,6 +709,7 @@ function sentinel_check() {
 
           else
       echo -e "${RED}Sentinel did not pass all tests. Find help on discord${NC}"
+      exit 1
     fi
 }
 
