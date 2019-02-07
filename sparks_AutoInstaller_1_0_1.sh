@@ -340,8 +340,9 @@ function secure_vps_ssh() {
     sudo systemctl restart sshd >/dev/null 2>&1
 
     echo -e "${RED}THE VPS is Secured with SSH-RSA KEY. TEST access BEFORE you disconect${NC}"
-    echo -e "${RED}after you have tested conncting with key  ${NC}"
-    echo -e "${RED}Press [Enter] key to continue... ${NC}"
+    echo -e "${RED}After you have tested conncting with the SSH-RSA KEY ${NC}"
+    echo -e ""
+    echo -e "${GREEN}Press [Enter] key to continue... ${NC}"
 #add undo option if test fails
 pause
   fi
@@ -700,16 +701,17 @@ EOF
 
 function sentinel_check() {
   cd $CONFIGFOLDER/sentinel
+  sleep 15
   sencheck=$(./venv/bin/py.test ./test | grep passed)
   sencheck=${sencheck//=}
-  senpass="23"
+  senpass="24"
     if [[ $sencheck  =~ $senpass ]];
     then
       echo -e "${GREEN}Sentinel installation passed all tests.${NC}"
 
           else
       echo -e "${RED}Sentinel did not pass all tests. Find help on discord${NC}"
-      exit 1
+      #exit 1
     fi
 }
 
