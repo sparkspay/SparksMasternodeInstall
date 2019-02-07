@@ -339,6 +339,7 @@ function secure_vps_ssh() {
 
     sudo systemctl restart sshd >/dev/null 2>&1
 
+    echo -e ""
     echo -e "${RED}THE VPS is Secured with SSH-RSA KEY. TEST access BEFORE you disconect${NC}"
     echo -e "${RED}After you have tested conncting with the SSH-RSA KEY ${NC}"
     echo -e ""
