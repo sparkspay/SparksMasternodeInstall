@@ -19,12 +19,14 @@ rm $CONFIGFOLDER/sentinel.log > /dev/null 2>&1
 
 #apt-get -y install python-virtualenv virtualenv >/dev/null 2>&1
 cd $CONFIGFOLDER
+echo "Clone Sentinal from github"
 git clone https://github.com/sparkspay/sentinel.git $CONFIGFOLDER/sentinel >/dev/null 2>&1
 cd $CONFIGFOLDER/sentinel
+echo "Configure virtualenv"
 virtualenv ./venv >/dev/null 2>&1
 ./venv/bin/pip install -r requirements.txt >/dev/null 2>&1
 
-
+echo "configure sentinel"
 mv $CONFIGFOLDER/sentinel/sentinel.conf /root/.sparkscore/sentinel/sentinel.OLD
 touch $CONFIGFOLDER/sentinel/sentinel.conf >/dev/null 2>&1
 cat << EOF > $CONFIGFOLDER/sentinel/sentinel.conf
@@ -44,3 +46,12 @@ db_driver=sqlite
 #DrWeez was here
 
 EOF
+
+
+
+echo "do quick test"
+
+cd $CONFIGFOLDER/sentinel && ./venv/bin/py.test ./test
+echo ""
+echo "if it failed any test ask for help on discord "
+echo  "sparkspay - https://discord.gg/6ktdN8Z"
