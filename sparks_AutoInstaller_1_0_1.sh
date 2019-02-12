@@ -698,11 +698,16 @@ function information() {
                                             \/ '
 
 $COIN_NAME Infomation
-$COIN_NAME Website  : https://www.sparkscoin.io/
-$COIN_NAME Github   : https://github.com/SparksReborn/sparkspay
+$COIN_NAME Website  : http://sparkspay.io/
+$COIN_NAME Github   : https://github.com/SparksPay
 $COIN_NAME Discord  : https://discord.gg/6ktdN8Z
 $COIN_NAME Telegram : https://t.me/SparksCoin
-$COIN_NAME Offical explorer: http://explorer.sparkscoin.io/
+$COIN_NAME Facebook : https://www.facebook.com/sparkspay.io/
+$COIN_NAME Twitter  : https://twitter.com/sparkspayio
+$COIN_NAME Medium   : https://medium.com/sparkspay
+$COIN_NAME Reddit   : https://www.reddit.com/r/SparksCoin
+$COIN_NAME Instagram: https://www.instagram.com/sparkspay/?hl=en
+$COIN_NAME Block explorer: http://explorer.sparkspay.io/
 $COIN_NAME Windows Wallet Guide. TBA
 
 Usefull Commands
