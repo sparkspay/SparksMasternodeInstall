@@ -560,7 +560,7 @@ echo
 }
 
 function get_mn_count() {
-wget -q http://explorer.sparkscoin.io/api/getmasternodecount -O getmasternodecount
+wget -q http://explorer.sparkspay.io/api/getmasternodecount -O getmasternodecount
 mncount=$(cat "getmasternodecount" | grep "total")
 mncount=${mncount#*:}
 mncount=${mncount%,*}
@@ -572,7 +572,7 @@ rm getmasternodecount
 function check_blocks() {
 
 cd
-wget -q http://explorer.sparkscoin.io/api/getblockcount -O getblockcount
+wget -q http://explorer.sparkspay.io/api/getblockcount -O getblockcount
 netblock=$(cat "getblockcount")
 rm getblockcount
 vpsblock=$($COIN_CLI getinfo | grep blocks)
