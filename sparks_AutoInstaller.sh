@@ -9,10 +9,10 @@
 #  v 1.0.2                                \/ '
 
 #ChangeLOG
-#V 1.02
-#updated to sparkspay v 12.3.5
+#V 1.0.2
+#updated to SparksPay v0.12.3.5
 
-#V 1.01
+#V 1.0.1
 #updated COIN_VERSION
 #updated COIN_TGZ
 #ADDED Upgrade / Fresh instrall checks and options
@@ -44,13 +44,12 @@ COIN_DAEMON='sparksd'
 COIN_VERSION='120305'
 ####check
 COIN_WALLET_VERSION='61000'
-COIN_PROTOCAL_VERSION='70208'
+COIN_PROTOCAL_VERSION='70210'
 ###
 COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
 COIN_TGZ='https://github.com/sparkspay/sparks/releases/download/v0.12.3.5/sparkscore-0.12.3.5-x86_64-linux-gnu.tar.gz'
-#COIN_TGZ='https://github.com/SparksReborn/sparkspay/releases/download/v0.12.3.2/sparkscore-0.12.3.2-linux64.tar.gz'
 COIN_EPATH='sparkscore-0.12.3/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
@@ -101,7 +100,7 @@ function intro(){
      :                  |___||___|    |___\  /   :
    Auto Installer v1.0.2                   \/ '
 
-  echo -e "${GREEN}This script will prepair your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
+  echo -e "${GREEN}This script will prepare your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
   echo -e "${GREEN}After installation and configuration the script run a series of tests   "
   echo
   echo -e "${GREEN}The complete process will take appoximatly 20+ minutes ${NC}"
@@ -315,8 +314,8 @@ if [[ $ADVANCE == '1' ]]; then
     if [[ ("$USERSSHKEY" == "y" || "$USERSSHKEY" == "Y" || "$USERSSHKEY" == "") ]]; then
 
         echo -e "${RED}PLEASE MAKE SURE YOU ENTER THE CORRECT DATA.${NC}"
-        echo -e "${RED}IF YOUR ENTER THE WRONG DATA YOU WILL NOT BE ABLE TO ACCEESS THE SERVER${NC}"
-        echo -e "${YELLOW}IF YOUR ENTER THE WRONG DATA YOU WILL NOT BE ABLE TO ACCEESS THE SERVER${NC}"
+        echo -e "${RED}IF YOUR ENTER THE WRONG DATA YOU WILL NOT BE ABLE TO ACCESS THE SERVER${NC}"
+        echo -e "${YELLOW}IF YOUR ENTER THE WRONG DATA YOU WILL NOT BE ABLE TO ACCESS THE SERVER${NC}"
         echo -e ""
         echo -e "${RED}Press CTR+C to exit now if you need are NOT sure ${NC}"
         echo -e ""
@@ -338,7 +337,7 @@ if [[ $ADVANCE == '1' ]]; then
           echo -e "${GREEN}RSA-SSH passed basic validation${NC}"
           ssh-keygen -l -f ~/.ssh/authorized_keys
           echo -e ""
-          echo -e "${RED}THE SSH-RSA KEY has been configured. TEST access BEFORE you disconect${NC}"
+          echo -e "${RED}THE SSH-RSA KEY has been configured. TEST access BEFORE you disconnect${NC}"
           echo -e "${GREEN}Do not close this window, Open a new window and test that you can connect with the SSH KEY${NC}"
           #echo -e "${RED}After you have tested conncting with the SSH-RSA KEY ${NC}"
           echo -e ""
@@ -387,7 +386,7 @@ function create_key() {
   $COIN_PATH$COIN_DAEMON -daemon
   sleep 30
   if [ -z "$(ps axo cmd:100 | grep $COIN_DAEMON)" ]; then
-   echo -e "${RED}$COIN_NAME server couldn not start. Check /var/log/syslog for errors.${$NC}"
+   echo -e "${RED}$COIN_NAME server could not start. Check /var/log/syslog for errors.${$NC}"
    exit 1
   fi
   COINKEY=$($COIN_PATH$COIN_CLI masternode genkey)
@@ -411,7 +410,7 @@ maxconnections=256
 masternode=1
 externalip=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
-
+disablewallet=1
 #ADDNODES
 
 #disable log for cheap VPS
@@ -463,7 +462,7 @@ fi
 function checks() {
 if [[ $(lsb_release -d) != *16.04* ]]; then
   if [[ $(lsb_release -d) != *18.04* ]]; then
-  echo -e "${RED}You are not running Ubuntu 16.04. or Ubuntu 18.04 Installation is cancelled.${NC}"
+  echo -e "${RED}You are not running Ubuntu 16.04 or Ubuntu 18.04 Installation is cancelled.${NC}"
   exit 1
   fi
 fi
@@ -473,9 +472,9 @@ function prepare_system() {
 echo -e "${GREEN}Preparing the VPS.${NC}"
 echo -e "${GREEN}Estimated run time for the following three steps is 5 min  ${NC}"
 sudo DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
-echo -e "${GREEN} Step 1 / 3 ${RED}apt-get update ${GREEN}done ${NC}"
+echo -e "${GREEN} Step 1 / 3 ${RED}apt update ${GREEN}done ${NC}"
 sudo DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1
-echo -e "${GREEN} Step 2 / 3 ${RED}apt-get upgrade ${GREEN}done ${NC}"
+echo -e "${GREEN} Step 2 / 3 ${RED}apt upgrade ${GREEN}done ${NC}"
 sudo DEBIAN_FRONTEND=noninteractive apt -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq dist-upgrade >/dev/null 2>&1
 echo -e "${GREEN} Step 3 / 3 ${RED}apt dist-upgrade ${GREEN}done ${NC}"
 sudo apt install -y software-properties-common >/dev/null 2>&1
@@ -493,10 +492,10 @@ if [ $CLEANSPARKS = "false" ] ; then
 if [ "$?" -gt "0" ];
   then
     echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
-    echo "apt-get update"
+    echo "apt update"
     echo "apt -y install software-properties-common"
     echo "apt-add-repository -y ppa:bitcoin/bitcoin"
-    echo "apt-get update"
+    echo "apt update"
     echo "apt install -y make build-essential libtool software-properties-common autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev \
 libboost-program-options-dev libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git curl libdb4.8-dev \
 bsdmainutils libdb4.8++-dev libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev libdb5.3++ unzip libzmq5"
@@ -516,7 +515,7 @@ sudo systemctl start fail2ban >/dev/null 2>&1
 function block_countdown() {
 msg="The coin daemon is now processing the bootstrap. will retry in ...  "
 msg1="The block count will only move once the bootstrap has been loaded into memory"
-msg2="Currntly $vpsblock block's out of $netblock processed   "
+msg2="Currently $vpsblock block's out of $netblock processed   "
 clear
 
 
@@ -603,7 +602,7 @@ function spk_versioncheck() {
           echo -e ""
           echo -e "Would you like to ${GREEN}upgrade[U]${RED}$COIN_NAME ${NC} or preform a ${GREEN}fresh install[f]${NC} [U/f] : "
           echo -e ""
-          echo -e "An upgrade will keep the current blockchan, sentinel and $COIN_NAME configuiration "
+          echo -e "An upgrade will keep the current blockchan, sentinel and $COIN_NAME configuration "
           echo -e "Ubuntu and only the ${RED}$COIN_NAME${NC} deamon/CLI will be upgraded"
           echo -e ""
           echo -e "A fresh install [f] will completely remove the old installation folder and configuration"
