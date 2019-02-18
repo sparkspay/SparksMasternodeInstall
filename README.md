@@ -25,7 +25,7 @@ If you require further assistance contact the support team @ [Discord](https://d
 * Install the Sparks wallet on your Mac or Windows PC
 * Send exactly 1000 SPK to your self (generate a new address for each new masternode)
 * Wait for at least 15 confirmations, then type this in the wallet console.
-* `mastenode outputs`
+* `masternode outputs`
 
 * Log onto your VPS and execute the following
 * `git clone https://github.com/sparkspay/SparksMasternodeInstall`
