@@ -19,7 +19,7 @@ If you require further assistance contact the support team @ [Discord](https://d
 * Make sure your Linux has Git installer. Execute the following on your VPS
 * `git --version`
 * If the reply is a version number, you can continue.
-* If not, use [this guide](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-14-04) to install Git:
+* If not, use [this guide](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-14-04) to install Git.
 
 ## The short version  
 * install the Sparks wallet on your Mac or Windows PC
@@ -29,7 +29,7 @@ If you require further assistance contact the support team @ [Discord](https://d
 
 * Log onto your VPS and execute the following
 * `git clone https://github.com/sparkspay/SparksMasternodeInstall`
-* `cd SparksMasternodeInstall
+* `cd SparksMasternodeInstall`
 * Make sure you have the latest version of the script
 * `git pull`
 * `chmod +x sparks_AutoInstaller.sh`
@@ -54,14 +54,14 @@ If you require further assistance contact the support team @ [Discord](https://d
 
 ***Step 2***
 * Paste the code below into terminal then press enter
-`git clone https://github.com/sparkspay/SparksMasternodeInstall`
-`cd SparksMasternodeInstall`
-`git pull`
+* `git clone https://github.com/sparkspay/SparksMasternodeInstall`
+* `cd SparksMasternodeInstall`
+* `git pull`
 ***
 ***Step 3***
 
 * if you are not logged in as the root user execue the folloing
-`chmod +x sparks_AutoInstaller.sh`
+* `chmod +x sparks_AutoInstaller.sh`
 
 * the run the Auto Installer with the following command
 
