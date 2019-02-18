@@ -32,8 +32,7 @@ If you require further assistance contact the support team @ [Discord](https://d
 * `cd SparksMasternodeInstall`
 * Make sure you have the latest version of the script
 * `git pull`
-* `chmod +x sparks_AutoInstaller.sh`
-* `bash sparks_AutoInstaller.sh`
+* `./sparks_AutoInstaller.sh`
 * Follow the on-screen instructions
 
 * If you are not sure of anything press Ctrl+c to exit
@@ -60,12 +59,9 @@ If you require further assistance contact the support team @ [Discord](https://d
 ***
 ***Step 3***
 
-* if you are not logged in as the root user execue the folloing
-* `chmod +x sparks_AutoInstaller.sh`
+* Run the Auto Installer with the following command
 
-* the run the Auto Installer with the following command
-
-`bash sparks_AutoInstaller.sh`
+`./sparks_AutoInstaller.sh`
 
 ![Example-Bash](https://i.imgur.com/5DAJNbd.png)
 
