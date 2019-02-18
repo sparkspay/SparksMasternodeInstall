@@ -99,7 +99,7 @@ function intro(){
   |       /|   |___||   :   ||   :  \ |     \ |       /
   |__:___/ |___|    |___|   ||   |___\|      \|__:___/
      :                  |___||___|    |___\  /   :
-   Auto Installer v1.0.1                   \/ '
+   Auto Installer v1.0.2                   \/ '
 
   echo -e "${GREEN}This script will prepair your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
   echo -e "${GREEN}After installation and configuration the script run a series of tests   "
