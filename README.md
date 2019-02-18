@@ -1,6 +1,6 @@
 ![Example-Logo](https://i.imgur.com/IPrlf78.png)
-# Sparks Masternode Setup Guide (Ubuntu 16.04 and 18.04)
-This guide will assist you in setting up a Sparks Masternode on a Linux Server running Ubuntu 16.04 or 16.04. (Use at your own risk)
+# SparksPay Masternode Setup Guide (Ubuntu 16.04 and 18.04)
+This guide will assist you in setting up a SparksPay Masternode on a Linux Server running Ubuntu 16.04 or 16.04. (Use at your own risk)
 
 If you require further assistance contact the support team @ [Discord](https://discord.gg/6ktdN8Z)
 ***
@@ -16,6 +16,11 @@ If you require further assistance contact the support team @ [Discord](https://d
 * **Section C**: Connecting & Starting the masternode.
 ***
 
+* Make sure your Linux has Git installer. Execute the following on your VPS
+* `git --version`
+* If the reply is a version number, you can continue.
+* If not, use [this guide](https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-14-04) to install Git:
+
 ## The short version  
 * install the Sparks wallet on your Mac or Windows PC
 * Send exactly 1000spk to your self
@@ -23,11 +28,14 @@ If you require further assistance contact the support team @ [Discord](https://d
 * mastenode outputs
 
 * Log onto your VPS and execute the following
-* `wget -q https://raw.githubusercontent.com/sparkspay/SparksMasternodeInstall/master/sparks_AutoInstaller_1_0_1.sh`
-* `chmod +x sparks_AutoInstaller_1_0_1.sh`
-* `bash sparks_AutoInstaller_1_0_1.sh`
+* `git clone https://github.com/sparkspay/SparksMasternodeInstall`
+* `cd SparksMasternodeInstall
+* Make sure you have the latest version of the script
+* `git pull`
+* `chmod +x sparks_AutoInstaller.sh`
+* `bash sparks_AutoInstaller.sh`
 * Follow the on-screen instructions
-*
+
 * If you are not sure of anything press Ctrl+c to exit
 * wait for the tests to loop
 * press start in HOT wallet when instructed
@@ -46,17 +54,18 @@ If you require further assistance contact the support team @ [Discord](https://d
 
 ***Step 2***
 * Paste the code below into terminal then press enter
-`wget -q https://raw.githubusercontent.com/sparkspay/SparksMasternodeInstall/master/sparks_AutoInstaller_1_0_1.sh`
-
+`git clone https://github.com/sparkspay/SparksMasternodeInstall`
+`cd SparksMasternodeInstall`
+`git pull`
 ***
 ***Step 3***
 
 * if you are not logged in as the root user execue the folloing
-`chmod +x sparks_AutoInstaller_1_0_1.sh`
+`chmod +x sparks_AutoInstaller.sh`
 
 * the run the Auto Installer with the following command
 
-`bash sparks_AutoInstaller_1_0_1.sh`
+`bash sparks_AutoInstaller.sh`
 
 ![Example-Bash](https://i.imgur.com/5DAJNbd.png)
 
