@@ -6,9 +6,12 @@
 #|       /|   |___||   :   ||   :  \ |     \ |       /
 #|__:___/ |___|    |___|   ||   |___\|      \|__:___/
 #   :                  |___||___|    |___\  /   :
-#  v 1.0.2                                \/ '
+#  v 1.0.3                                \/ '
 
 #ChangeLOG
+#V 1.0.3
+#updated to SparksPay v0.12.3.6
+
 #V 1.0.2
 #updated to SparksPay v0.12.3.5
 
@@ -49,7 +52,7 @@ COIN_PROTOCAL_VERSION='70210'
 COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
-COIN_TGZ='https://github.com/sparkspay/sparks/releases/download/v0.12.3.5/sparkscore-0.12.3.5-x86_64-linux-gnu.tar.gz'
+COIN_TGZ='https://github.com/sparkspay/sparks/releases/download/v0.12.3.6/sparkscore-0.12.3.6-x86_64-linux-gnu.tar.gz'
 COIN_EPATH='sparkscore-0.12.3/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
