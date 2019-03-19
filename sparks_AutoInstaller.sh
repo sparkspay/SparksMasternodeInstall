@@ -28,7 +28,7 @@
 #added checks
 #changed install for root or non root user
 #added option to secure with SSH-RSA-KEY
-#added elivated privilages for non root install
+#added elevated privileges for non root install
 #added info file
 #some code from Real_Bit_Yoda's sparks intall script
 
@@ -101,19 +101,19 @@ function intro(){
    Auto Installer v1.0.2                   \/ '
 
   echo -e "${GREEN}This script will prepare your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
-  echo -e "${GREEN}After installation and configuration the script run a series of tests   "
+  echo -e "${GREEN}After the installation is completed, the script run a series of tests   "
   echo
-  echo -e "${GREEN}The complete process will take appoximatly 20+ minutes ${NC}"
-  echo -e "${GREEN}Important configuration infomation and commands can be found ${NC}"
+  echo -e "${GREEN}The complete process will take appoximately 20+ minutes ${NC}"
+  echo -e "${GREEN}Important configuration information and commands can be found ${NC}"
   echo -e "${GREEN}in${RED} $CONFIGFOLDER/$COIN_NAME.info ${NC}"
   echo
   echo -e "${NC}When the ${RED}$COIN_NAME${NC} masternode is synced you will be prompted to  ${NC}"
   echo -e "${NC}start the master node in the windows wallet. ${NC}"
   echo
-  echo -e "${RED}The script will clear your crontab, please backup custom infomation before you continue ${NC}"
+  echo -e "${RED}The script will clear your crontab, please backup custom information before you continue ${NC}"
   echo -e "${RED}Press CTR+C to exit now if you need to backup info in your crontab ${NC}"
   echo
-  echo -e "${YELLOW}Lets get started, Press [Enter] key to continue..."
+  echo -e "${YELLOW}Let's get started, Press [Enter] key to continue..."
   echo
 pause
 }
@@ -600,14 +600,14 @@ function spk_versioncheck() {
           echo -e ""
           echo -e "${RED}$COIN_NAME ${NC}version${RED}$spk_version ${NC}is already installed.${NC}"
           echo -e ""
-          echo -e "Would you like to ${GREEN}upgrade[U]${RED}$COIN_NAME ${NC} or preform a ${GREEN}fresh install[f]${NC} [U/f] : "
+          echo -e "Would you like to ${GREEN}upgrade[U]${RED}$COIN_NAME ${NC} or perform a ${GREEN}fresh install[f]${NC} [U/f] : "
           echo -e ""
-          echo -e "An upgrade will keep the current blockchan, sentinel and $COIN_NAME configuration "
-          echo -e "Ubuntu and only the ${RED}$COIN_NAME${NC} deamon/CLI will be upgraded"
+          echo -e "An upgrade will keep the current blockchain, sentinel and $COIN_NAME configuration "
+          echo -e "Ubuntu and only the ${RED}$COIN_NAME${NC} daemon/CLI will be upgraded"
           echo -e ""
           echo -e "A fresh install [f] will completely remove the old installation folder and configuration"
           echo -e "as well as remove all ${RED}$COIN_NAME ${NC}files, Make sure you have backed up your data "
-          echo -e "The masternodeprivatekey will be saved and used in the new installation"
+          echo -e "The masternode private key will be saved and used in the new installation"
           echo -e ""
           echo -e "Upgrade[U] ${RED}$COIN_NAME ${NC}or Fresh install [f] [U/f] : "
           read -e FRESHUPGRADE
@@ -833,7 +833,7 @@ fi
   sudo killall $COIN_DAEMON > /dev/null 2>&1
   #remove some old files
   sudo rm $CONFIGFOLDER/bootstrap.dat.old > /dev/null 2>&1
-  #remove old deamon and cli
+  #remove old daemon and cli
   cd /usr/local/bin && sudo rm $COIN_CLI $COIN_DAEMON > /dev/null 2>&1 && cd
   cd /usr/bin && sudo rm $COIN_CLI $COIN_DAEMON > /dev/null 2>&1 && cd
   # remove old extracted files if they were not cleaned up before
