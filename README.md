@@ -1,6 +1,8 @@
 ![Example-Logo](https://i.imgur.com/IPrlf78.png)
-# SparksPay Masternode Setup Guide (Ubuntu 16.04 and 18.04)
+# SparksPay Masternode Setup Guide (Ubuntu 16.04 and 18.04 - 64 bit)
 This guide will assist you in setting up a SparksPay Masternode on a Linux Server running Ubuntu 16.04 or 16.04. (Use at your own risk)
+
+If you don't know what flavor (32 bit or 64 bit) of Linux you have, type `uname -m` in console. It shows if your system is running 32-bit (i686 or i386) or 64-bit(x86_64). For this install script to work, x86_64 is required.
 
 If you require further assistance contact the support team @ [Discord](https://discord.gg/6ktdN8Z)
 ***
