@@ -437,6 +437,7 @@ disablewallet=1
 
 #disable log for cheap VPS
 #printtodebuglog=0
+#disablewallet=1
 
 EOF
 }
@@ -686,10 +687,13 @@ function spk_versioncheck() {
    fi
 }
 
+#this check will loop if disablewallet=1
+#change to check version rather than wallet.
+#generate key function will still work as it is done before disabling the wallet.
 function walletloadedcheck() {
   sync_msg="loading wallet, will retry in ..."
   sync_countdown
-  vpsversion=$($COIN_CLI getinfo | grep walletversion)
+  vpsversion=$($COIN_CLI getinfo | grep version)
   vpsversion=${vpsversion#*:}
   vpsversion=${vpsversion%,*}
 }
@@ -788,9 +792,9 @@ function sentinel_check() {
       #exit 1
     fi
 }
-
+#changed tolook at coin version and not wallet version
 function sync_node_blocks() {
-  until [[ $vpsversion -eq $COIN_WALLET_VERSION ]]; do
+  until [[ $COIN_VERSION -eq $COIN_WALLET_VERSION ]]; do
     sleep 3
     walletloadedcheck
   done
