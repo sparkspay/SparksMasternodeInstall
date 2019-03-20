@@ -78,7 +78,7 @@ CONFIGFOLDER=''
 UPGRADESPARKS='false'
 CLEANSPARKS='false'
 ADVANCE='1'
-MACHINE_TYPE=uname -m
+MACHINE_TYPE=$(uname -m)
 
 NODEIP=$(curl -s4 icanhazip.com)
 
@@ -490,11 +490,17 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   fi
 fi
 
-if [[ $(MACHINE_TYPE) == 'x86_64' ]]; then
+if [[ $MACHINE_TYPE == 'x86_64' ]]; then
   COIN_TGZ=$COIN_TGZx86_64
 else
-  COIN_TGZ=$COIN_TGZx86_32
+  if [[ $MACHINE_TYPE == 'i686' ]]; then
+    COIN_TGZ=$COIN_TGZx86_32
+  else
+    echo -e "${RED}You are not running Ubuntu x64 or Ubuntu i686. Installation is cancelled.${NC}"
+    exit 1
+  fi
 fi
+
 }
 
 function prepare_system() {
