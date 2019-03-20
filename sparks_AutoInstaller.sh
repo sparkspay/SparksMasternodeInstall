@@ -6,9 +6,14 @@
 #|       /|   |___||   :   ||   :  \ |     \ |       /
 #|__:___/ |___|    |___|   ||   |___\|      \|__:___/
 #   :                  |___||___|    |___\  /   :
-#  v 1.0.2                                \/ '
+#  v 1.0.3                                \/ '
 
 #ChangeLOG
+#V 1.0.3
+#updated to SparksPay v0.12.4 BETA
+#changed sentinel crontab method
+#added sentinel repo check 
+
 #V 1.0.2
 #updated to SparksPay v0.12.3.5
 
@@ -50,7 +55,8 @@ COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
 COIN_TGZ='https://github.com/sparkspay/sparks/releases/download/v0.12.3.5/sparkscore-0.12.3.5-x86_64-linux-gnu.tar.gz'
-COIN_EPATH='sparkscore-0.12.3/bin'
+# beta testing url COIN_TGZ='sparkscore-0.12.4-x86_64-linux-gnu.tar.gz'
+COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
@@ -152,9 +158,21 @@ function install_sentinel() {
   cd $CONFIGFOLDER/sentinel
     virtualenv ./venv >/dev/null 2>&1
   ./venv/bin/pip install -r requirements.txt >/dev/null 2>&1
-  echo  "* * * * * cd $CONFIGFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $CONFIGFOLDER/sentinel.log 2>&1" > $CONFIGFOLDER/$COIN_NAME.cron
-  crontab $CONFIGFOLDER/$COIN_NAME.cron
-  rm $CONFIGFOLDER/$COIN_NAME.cron >/dev/null 2>&1
+  #echo  "* * * * * cd $CONFIGFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $CONFIGFOLDER/sentinel.log 2>&1" > $CONFIGFOLDER/$COIN_NAME.cron
+  #crontab $CONFIGFOLDER/$COIN_NAME.cron
+  #rm $CONFIGFOLDER/$COIN_NAME.cron >/dev/null 2>&1
+
+#BETA FUNCTION
+#full test still required
+
+#maybe ned to test for sparks in the crontab as well and remove it?
+
+croncmd="cd $CONFIGFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $CONFIGFOLDER/sentinel.log 2>&1"
+cronjob="* * * * * $croncmd"
+#add
+( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
+#remove
+#( crontab -l | grep -v -F "$croncmd" ) | crontab -
 
 cat << EOF > $CONFIGFOLDER/sentinel/sentinel.conf
 # specify path to sparks.conf or leave blank
@@ -739,6 +757,7 @@ EOF
 function sentinel_check() {
   cd $CONFIGFOLDER/sentinel
   sleep 15
+  #git config --get remote.origin.url
   sencheck=$(./venv/bin/py.test ./test | grep passed)
   sencheck=${sencheck//=}
   senpass="24"
@@ -840,12 +859,20 @@ fi
   sudo rm -rf $COIN_EPATH >/dev/null 2>&1
   #rename the info file for info
   sudo mv $HOMEPATH/$COIN_NAME.info $HOMEPATH/$COIN_NAME.info.old >/dev/null 2>&1
+
   #Remove old sentinel and install from new repo
-  sudo rm -rf $CONFIGFOLDER/sentinel > /dev/null 2>&1
+  #check sentinel repository
+  cd $CONFIGFOLDER/sentinel > /dev/null 2>&1
+  sentinelreposotory=$(git config --get remote.origin.url) > /dev/null 2>&1
+  if [[ $sentinelreposotory == 'https://github.com/sparkspay/sentinel.git' ]]; then
+    echo -e "${GREEN}Skipping sentinel Repo Upgrade! ${NC}"
+    #git pull
+  else
+    sudo rm -rf $CONFIGFOLDER/sentinel > /dev/null 2>&1
+    install_sentinel
+  fi
 
   download_node
-  install_sentinel
-
   sudo systemctl start $COIN_NAME.service >/dev/null 2>&1
 }
 
