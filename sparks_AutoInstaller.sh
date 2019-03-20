@@ -489,14 +489,13 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   exit 1
   fi
 fi
-}
 
 if [ ${MACHINE_TYPE} == 'x86_64' ]; then
   COIN_TGZ=$COIN_TGZx86_64
 else
   COIN_TGZ=$COIN_TGZx86_32
 fi
-
+}
 
 function prepare_system() {
 echo -e "${GREEN}Preparing the VPS.${NC}"
@@ -894,9 +893,11 @@ function pause(){
 
 ##### Main #####
 clear
+checks
 defineuserpath
 intro
 spk_versioncheck
+
 
 ##
 if [ $UPGRADESPARKS = "true" ]; then
