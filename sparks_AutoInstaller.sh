@@ -109,7 +109,7 @@ function intro(){
   |       /|   |___||   :   ||   :  \ |     \ |       /
   |__:___/ |___|    |___|   ||   |___\|      \|__:___/
      :                  |___||___|    |___\  /   :
-   Auto Installer v1.0.2                   \/ '
+   Auto Installer v1.0.3                   \/ '
 
   echo -e "${GREEN}This script will prepare your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
   echo -e "${GREEN}After the installation is completed, the script run a series of tests   "
@@ -490,7 +490,7 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   fi
 fi
 
-if [ ${MACHINE_TYPE} == 'x86_64' ]; then
+if [[ $(MACHINE_TYPE) == 'x86_64' ]]; then
   COIN_TGZ=$COIN_TGZx86_64
 else
   COIN_TGZ=$COIN_TGZx86_32
