@@ -693,9 +693,10 @@ function spk_versioncheck() {
 function walletloadedcheck() {
   sync_msg="loading wallet, will retry in ..."
   sync_countdown
-  vpsversion=$($COIN_CLI getinfo | grep version)
-  vpsversion=${vpsversion#*:}
-  vpsversion=${vpsversion%,*}
+vpsversion=$($COIN_CLI getinfo | grep -w version)
+  #vpsversion=$($COIN_CLI getinfo | grep version)
+  #vpsversion=${vpsversion#*:}
+  #vpsversion=${vpsversion%,*}
 }
 
 function check_mnsync() {
@@ -794,7 +795,7 @@ function sentinel_check() {
 }
 #changed tolook at coin version and not wallet version
 function sync_node_blocks() {
-  until [[ $COIN_VERSION -eq $COIN_WALLET_VERSION ]]; do
+  until [[ $COIN_VERSION -eq $vpsversion ]]; do
     sleep 3
     walletloadedcheck
   done
