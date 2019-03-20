@@ -13,6 +13,7 @@
 ##updated to SparksPay v0.12.3.6
 #changed sentinel crontab method
 #added sentinel repo check
+#added 32/64 bit checks
 
 
 #V 1.0.2
@@ -55,10 +56,11 @@ COIN_PROTOCAL_VERSION='70210'
 COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
-COIN_TGZ='https://github.com/sparkspay/sparks/releases/download/v0.12.3.6/sparkscore-0.12.3.6-x86_64-linux-gnu.tar.gz'
+COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.3.6/sparkscore-0.12.3.6-x86_64-linux-gnu.tar.gz'
+COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.3.6/sparkscore-0.12.3.6-i686-pc-linux-gnu.tar.gz'
 COIN_EPATH='sparkscore-0.12.3/bin'
 # beta testing url COIN_TGZ='sparkscore-0.12.4-x86_64-linux-gnu.tar.gz'
-#beta testing COIN_EPATH='sparkscore-0.12.4/bin'
+# beta testing COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
@@ -76,6 +78,7 @@ CONFIGFOLDER=''
 UPGRADESPARKS='false'
 CLEANSPARKS='false'
 ADVANCE='0'
+MACHINE_TYPE=uname -m
 
 NODEIP=$(curl -s4 icanhazip.com)
 
@@ -487,6 +490,13 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   fi
 fi
 }
+
+if [ ${MACHINE_TYPE} == 'x86_64' ]; then
+  COIN_TGZ=$COIN_TGZx86_64
+else
+  COIN_TGZ=$COIN_TGZx86_32
+fi
+
 
 function prepare_system() {
 echo -e "${GREEN}Preparing the VPS.${NC}"
