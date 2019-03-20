@@ -77,7 +77,7 @@ HOMEPATH=''
 CONFIGFOLDER=''
 UPGRADESPARKS='false'
 CLEANSPARKS='false'
-ADVANCE='0'
+ADVANCE='1'
 MACHINE_TYPE=uname -m
 
 NODEIP=$(curl -s4 icanhazip.com)
