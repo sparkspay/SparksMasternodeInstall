@@ -10,9 +10,10 @@
 
 #ChangeLOG
 #V 1.0.3
-#updated to SparksPay v0.12.4 BETA
+##updated to SparksPay v0.12.3.6
 #changed sentinel crontab method
-#added sentinel repo check 
+#added sentinel repo check
+
 
 #V 1.0.2
 #updated to SparksPay v0.12.3.5
@@ -33,7 +34,7 @@
 #added checks
 #changed install for root or non root user
 #added option to secure with SSH-RSA-KEY
-#added elivated privilages for non root install
+#added elevated privileges for non root install
 #added info file
 #some code from Real_Bit_Yoda's sparks intall script
 
@@ -46,7 +47,7 @@ USER=$USER
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='sparks.conf'
 COIN_DAEMON='sparksd'
-COIN_VERSION='120305'
+COIN_VERSION='120306'
 ####check
 COIN_WALLET_VERSION='61000'
 COIN_PROTOCAL_VERSION='70210'
@@ -54,9 +55,10 @@ COIN_PROTOCAL_VERSION='70210'
 COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
-COIN_TGZ='https://github.com/sparkspay/sparks/releases/download/v0.12.3.5/sparkscore-0.12.3.5-x86_64-linux-gnu.tar.gz'
+COIN_TGZ='https://github.com/sparkspay/sparks/releases/download/v0.12.3.6/sparkscore-0.12.3.6-x86_64-linux-gnu.tar.gz'
+COIN_EPATH='sparkscore-0.12.3/bin'
 # beta testing url COIN_TGZ='sparkscore-0.12.4-x86_64-linux-gnu.tar.gz'
-COIN_EPATH='sparkscore-0.12.4/bin'
+#beta testing COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
@@ -107,19 +109,19 @@ function intro(){
    Auto Installer v1.0.2                   \/ '
 
   echo -e "${GREEN}This script will prepare your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
-  echo -e "${GREEN}After installation and configuration the script run a series of tests   "
+  echo -e "${GREEN}After the installation is completed, the script run a series of tests   "
   echo
-  echo -e "${GREEN}The complete process will take appoximatly 20+ minutes ${NC}"
-  echo -e "${GREEN}Important configuration infomation and commands can be found ${NC}"
+  echo -e "${GREEN}The complete process will take appoximately 20+ minutes ${NC}"
+  echo -e "${GREEN}Important configuration information and commands can be found ${NC}"
   echo -e "${GREEN}in${RED} $CONFIGFOLDER/$COIN_NAME.info ${NC}"
   echo
   echo -e "${NC}When the ${RED}$COIN_NAME${NC} masternode is synced you will be prompted to  ${NC}"
   echo -e "${NC}start the master node in the windows wallet. ${NC}"
   echo
-  echo -e "${RED}The script will clear your crontab, please backup custom infomation before you continue ${NC}"
+  echo -e "${RED}The script will clear your crontab, please backup custom information before you continue ${NC}"
   echo -e "${RED}Press CTR+C to exit now if you need to backup info in your crontab ${NC}"
   echo
-  echo -e "${YELLOW}Lets get started, Press [Enter] key to continue..."
+  echo -e "${YELLOW}Let's get started, Press [Enter] key to continue..."
   echo
 pause
 }
@@ -618,14 +620,14 @@ function spk_versioncheck() {
           echo -e ""
           echo -e "${RED}$COIN_NAME ${NC}version${RED}$spk_version ${NC}is already installed.${NC}"
           echo -e ""
-          echo -e "Would you like to ${GREEN}upgrade[U]${RED}$COIN_NAME ${NC} or preform a ${GREEN}fresh install[f]${NC} [U/f] : "
+          echo -e "Would you like to ${GREEN}upgrade[U]${RED}$COIN_NAME ${NC} or perform a ${GREEN}fresh install[f]${NC} [U/f] : "
           echo -e ""
-          echo -e "An upgrade will keep the current blockchan, sentinel and $COIN_NAME configuration "
-          echo -e "Ubuntu and only the ${RED}$COIN_NAME${NC} deamon/CLI will be upgraded"
+          echo -e "An upgrade will keep the current blockchain, sentinel and $COIN_NAME configuration "
+          echo -e "Ubuntu and only the ${RED}$COIN_NAME${NC} daemon/CLI will be upgraded"
           echo -e ""
           echo -e "A fresh install [f] will completely remove the old installation folder and configuration"
           echo -e "as well as remove all ${RED}$COIN_NAME ${NC}files, Make sure you have backed up your data "
-          echo -e "The masternodeprivatekey will be saved and used in the new installation"
+          echo -e "The masternode private key will be saved and used in the new installation"
           echo -e ""
           echo -e "Upgrade[U] ${RED}$COIN_NAME ${NC}or Fresh install [f] [U/f] : "
           read -e FRESHUPGRADE
@@ -852,7 +854,7 @@ fi
   sudo killall $COIN_DAEMON > /dev/null 2>&1
   #remove some old files
   sudo rm $CONFIGFOLDER/bootstrap.dat.old > /dev/null 2>&1
-  #remove old deamon and cli
+  #remove old daemon and cli
   cd /usr/local/bin && sudo rm $COIN_CLI $COIN_DAEMON > /dev/null 2>&1 && cd
   cd /usr/bin && sudo rm $COIN_CLI $COIN_DAEMON > /dev/null 2>&1 && cd
   # remove old extracted files if they were not cleaned up before
