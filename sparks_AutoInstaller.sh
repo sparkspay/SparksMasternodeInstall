@@ -694,7 +694,7 @@ function walletloadedcheck() {
   sync_msg="Daemon was still loading, will retry in ..."
   sync_countdown
 #vpsversion=$($COIN_CLI getinfo | grep -w version)
-  vpsversion=$($COIN_CLI getinfo | grep version)
+  vpsversion=$($COIN_CLI getinfo | grep -w version)
   vpsversion=${vpsversion#*:}
   vpsversion=${vpsversion%,*}
 }
