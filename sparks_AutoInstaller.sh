@@ -635,7 +635,7 @@ fi
 function spk_versioncheck() {
   clear
   if [ -e $CONFIGFOLDER/$CONFIG_FILE ]; then
-    spk_version=$($COIN_CLI getinfo | grep -w version)
+    spk_version=$($COIN_CLI getinfo | grep -w '"version":')
     spk_version=${spk_version#*:}
     spk_version=${spk_version%,*}
 
