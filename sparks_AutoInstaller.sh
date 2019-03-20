@@ -691,12 +691,12 @@ function spk_versioncheck() {
 #change to check version rather than wallet.
 #generate key function will still work as it is done before disabling the wallet.
 function walletloadedcheck() {
-  sync_msg="loading wallet, will retry in ..."
+  sync_msg="Daemon was still loading, will retry in ..."
   sync_countdown
-vpsversion=$($COIN_CLI getinfo | grep -w version)
-  #vpsversion=$($COIN_CLI getinfo | grep version)
-  #vpsversion=${vpsversion#*:}
-  #vpsversion=${vpsversion%,*}
+#vpsversion=$($COIN_CLI getinfo | grep -w version)
+  vpsversion=$($COIN_CLI getinfo | grep version)
+  vpsversion=${vpsversion#*:}
+  vpsversion=${vpsversion%,*}
 }
 
 function check_mnsync() {
