@@ -62,7 +62,6 @@ COIN_EPATH='sparkscore-0.12.3/bin'
 # beta testing url COIN_TGZ='sparkscore-0.12.4-x86_64-linux-gnu.tar.gz'
 # beta testing COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
-COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
 COIN_NAME='sparks'
 COIN_PORT=8890
@@ -492,9 +491,11 @@ fi
 
 if [[ $MACHINE_TYPE == 'x86_64' ]]; then
   COIN_TGZ=$COIN_TGZx86_64
+  COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 else
   if [[ $MACHINE_TYPE == 'i686' ]]; then
     COIN_TGZ=$COIN_TGZx86_32
+    COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
   else
     echo -e "${RED}You are not running Ubuntu x64 or Ubuntu i686. Installation is cancelled.${NC}"
     exit 1
