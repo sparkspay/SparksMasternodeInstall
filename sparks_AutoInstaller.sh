@@ -76,7 +76,7 @@ HOMEPATH=''
 CONFIGFOLDER=''
 UPGRADESPARKS='false'
 CLEANSPARKS='false'
-ADVANCE='1'
+ADVANCE='0'
 MACHINE_TYPE=$(uname -m)
 
 NODEIP=$(curl -s4 icanhazip.com)
@@ -102,7 +102,8 @@ function defineuserpath() {
 
 function intro(){
 
-  echo '.________._______ .______  .______  .____/\ .________
+  echo '
+  .________._______ .______  .______  .____/\ .________
   |    ___/: ____  |:      \ : __   \ :   /  \|    ___/
   |___    \|    :  ||   .   ||  \____||.  ___/|___    \
   |       /|   |___||   :   ||   :  \ |     \ |       /
@@ -146,6 +147,7 @@ purgeOldInstallation() {
       sudo ufw delete allow 8890/tcp > /dev/null 2>&1
       #remove old Service
       sudo rm /lib/systemd/system/$COIN_NAME.service > /dev/null 2>&1
+      sudo rm /etc/systemd/system/$COIN_NAME.service > /dev/null 2>&1
       #sudo rm ~/$CONFIGFOLDER/$COIN_NAME.service > /dev/null 2>&1
       #delete whole sparks folder
       sudo rm -rf /$CONFIGFOLDER > /dev/null 2>&1
@@ -243,7 +245,12 @@ WantedBy=multi-user.target
 EOF
 
 sudo chown -R $USER:$USER ~/
-sudo cp $CONFIGFOLDER/$COIN_NAME.service /lib/systemd/system/$COIN_NAME.service
+#sudo cp $CONFIGFOLDER/$COIN_NAME.service /lib/systemd/system/$COIN_NAME.service
+sudo cp $CONFIGFOLDER/$COIN_NAME.service /etc/systemd/system/$COIN_NAME.service
+#/etc/systemd/system/sparksd.service
+#or even better
+#/etc/systemd/system/sparksd_username.service [ for multinodes ]
+
 #>/dev/null 2>&1
   sudo systemctl daemon-reload >/dev/null 2>&1
   sleep 3
