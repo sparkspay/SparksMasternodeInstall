@@ -47,9 +47,18 @@ db_driver=sqlite
 
 EOF
 
+# crontab
+croncmd="cd $CONFIGFOLDER/sentinel && ./venv/bin/python bin/sentinel.py >> $CONFIGFOLDER/sentinel.log 2>&1"
+cronjob="* * * * * $croncmd"
+#add
+( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
+#remove
+#( crontab -l | grep -v -F "$croncmd" ) | crontab -
 
 
+echo ""
 echo "do quick test"
+echo ""
 
 cd $CONFIGFOLDER/sentinel && ./venv/bin/py.test ./test
 echo ""
