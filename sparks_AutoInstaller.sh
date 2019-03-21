@@ -160,6 +160,8 @@ function install_sentinel() {
   echo -e "${GREEN}Installing sentinel.${NC}"
   sudo apt-get -y install python-virtualenv virtualenv >/dev/null 2>&1
   git clone $SENTINEL_REPO $CONFIGFOLDER/sentinel >/dev/null 2>&1
+  #https://github.com/sparkspay/sentinel.git
+#  git clone https://github.com/sparkspay/sentinel.git $CONFIGFOLDER/sentinel >/dev/null 2>&1
   sudo chown -R $USER:$USER $CONFIGFOLDER/sentinel
   cd $CONFIGFOLDER/sentinel
     virtualenv ./venv >/dev/null 2>&1
@@ -897,12 +899,16 @@ fi
   if [[ $sentinelreposotory == 'https://github.com/sparkspay/sentinel.git' ]]; then
     echo -e "${GREEN}Skipping sentinel Repo Upgrade! ${NC}"
     #git pull
+    download_node
   else
+    echo -e "${GREEN}Sentinel RepoRequires Upgrade! ${NC}"
     sudo rm -rf $CONFIGFOLDER/sentinel > /dev/null 2>&1
+    #might need to move this to later
+    download_node
     install_sentinel
   fi
 
-  download_node
+
   sudo systemctl start $COIN_NAME.service >/dev/null 2>&1
 }
 
