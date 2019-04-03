@@ -55,8 +55,8 @@ COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
 #needs to be updated once public
-COIN_TGZx86_64='http://mine.below0.co.za/sparks/sparkscore-0.12.4.0-x86_64-linux-gnu.tar.gz'
-COIN_TGZx86_32='http://mine.below0.co.za/sparks/sparkscore-0.12.4.0-i686-pc-linux-gnu.tar.gz'
+COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.4.0/sparkscore-0.12.4.0-x86_64-linux-gnu.tar.gz'
+COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.4.0/sparkscore-0.12.4.0-i686-pc-linux-gnu.tar.gz'
 COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
@@ -72,7 +72,7 @@ HOMEPATH=''
 CONFIGFOLDER=''
 UPGRADESPARKS='false'
 CLEANSPARKS='false'
-ADVANCE='1'
+ADVANCE='0'
 MACHINE_TYPE=$(uname -m)
 
 NODEIP=$(curl -s4 icanhazip.com)
