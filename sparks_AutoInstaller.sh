@@ -6,11 +6,14 @@
 #|       /|   |___||   :   ||   :  \ |     \ |       /
 #|__:___/ |___|    |___|   ||   |___\|      \|__:___/
 #   :                  |___||___|    |___\  /   :
-#  v 1.0.3                                \/ '
+#  v 1.0.4                                \/ '
 
 #ChangeLOG
+#V 1.0.4
+#updated to SparksPay v0.12.4.0
+
 #V 1.0.3
-##updated to SparksPay v0.12.3.6
+#updated to SparksPay v0.12.3.6
 #changed sentinel crontab method
 #added sentinel repo check
 #added 32/64 bit checks
@@ -37,12 +40,7 @@
 #added option to secure with SSH-RSA-KEY
 #added elevated privileges for non root install
 #added info file
-#some code from Real_Bit_Yoda's sparks intall script
-
-#USERNAME=
-#useradd -m -s /bin/bash -G adm,systemd-journal,sudo $USERNAME && passwd $USERNAME
-#su $USERNAME
-#cd ~/
+#some code from Real_Bit_Yoda's sparks install script
 
 USER=$USER
 TMP_FOLDER=$(mktemp -d)
@@ -51,16 +49,15 @@ COIN_DAEMON='sparksd'
 COIN_VERSION='120306'
 ####check
 COIN_WALLET_VERSION='61000'
-COIN_PROTOCAL_VERSION='70210'
+COIN_PROTOCAL_VERSION='70212'
 ###
 COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
-COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.3.6/sparkscore-0.12.3.6-x86_64-linux-gnu.tar.gz'
-COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.3.6/sparkscore-0.12.3.6-i686-pc-linux-gnu.tar.gz'
-COIN_EPATH='sparkscore-0.12.3/bin'
-# beta testing url COIN_TGZ='sparkscore-0.12.4-x86_64-linux-gnu.tar.gz'
-# beta testing COIN_EPATH='sparkscore-0.12.4/bin'
+#needs to be updated once public
+COIN_TGZx86_64='http://mine.below0.co.za/sparks/sparkscore-0.12.4.0-x86_64-linux-gnu.tar.gz'
+COIN_TGZx86_32='http://mine.below0.co.za/sparks/sparkscore-0.12.4.0-i686-pc-linux-gnu.tar.gz'
+COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
 COIN_NAME='sparks'
@@ -68,7 +65,6 @@ COIN_PORT=8890
 RPC_PORT=8818
 STIL_BUSY='true'
 mnsync='false'
-#defined in functions, declared here as public
 MNGENKEY=''
 SSH_RSA_KEY=''
 sencheck=''
@@ -76,7 +72,7 @@ HOMEPATH=''
 CONFIGFOLDER=''
 UPGRADESPARKS='false'
 CLEANSPARKS='false'
-ADVANCE='0'
+ADVANCE='1'
 MACHINE_TYPE=$(uname -m)
 
 NODEIP=$(curl -s4 icanhazip.com)
@@ -109,7 +105,7 @@ function intro(){
   |       /|   |___||   :   ||   :  \ |     \ |       /
   |__:___/ |___|    |___|   ||   |___\|      \|__:___/
      :                  |___||___|    |___\  /   :
-   Auto Installer v1.0.3                   \/ '
+   Auto Installer v1.0.4                   \/ '
 
   echo -e "${GREEN}This script will prepare your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
   echo -e "${GREEN}After the installation is completed, the script run a series of tests   "
