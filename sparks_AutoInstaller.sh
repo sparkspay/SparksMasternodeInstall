@@ -6,9 +6,12 @@
 #|       /|   |___||   :   ||   :  \ |     \ |       /
 #|__:___/ |___|    |___|   ||   |___\|      \|__:___/
 #   :                  |___||___|    |___\  /   :
-#  v 1.0.4                                \/ '
+#  v 1.0.5                                \/ '
 
 #ChangeLOG
+#V 1.0.5
+#updated to SparksPay v0.12.4.1
+
 #V 1.0.4
 #updated to SparksPay v0.12.4.0
 
@@ -55,8 +58,8 @@ COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
 #needs to be updated once public
-COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.4.0/sparkscore-0.12.4.0-x86_64-linux-gnu.tar.gz'
-COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.4.0/sparkscore-0.12.4.0-i686-pc-linux-gnu.tar.gz'
+COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.4.1/sparkscore-0.12.4.1-x86_64-linux-gnu.tar.gz'
+COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.4.1/sparkscore-0.12.4.1-i686-pc-linux-gnu.tar.gz'
 COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
