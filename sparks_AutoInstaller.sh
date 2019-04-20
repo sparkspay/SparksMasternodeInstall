@@ -6,9 +6,12 @@
 #|       /|   |___||   :   ||   :  \ |     \ |       /
 #|__:___/ |___|    |___|   ||   |___\|      \|__:___/
 #   :                  |___||___|    |___\  /   :
-#  v 1.0.5                                \/ '
+#  v 1.0.6                                \/ '
 
 #ChangeLOG
+#V 1.0.6
+#updated to SparksPay v0.12.4.2
+
 #V 1.0.5
 #updated to SparksPay v0.12.4.1
 
@@ -49,17 +52,17 @@ USER=$USER
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='sparks.conf'
 COIN_DAEMON='sparksd'
-COIN_VERSION='120401'
+COIN_VERSION='120402'
 ####check
 COIN_WALLET_VERSION='61000'
-COIN_PROTOCAL_VERSION='70212'
+COIN_PROTOCAL_VERSION='70213'
 ###
 COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
 #needs to be updated once public
-COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.4.1/sparkscore-0.12.4.1-x86_64-linux-gnu.tar.gz'
-COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.4.1/sparkscore-0.12.4.1-i686-pc-linux-gnu.tar.gz'
+COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.4.2/sparkscore-0.12.4.2-x86_64-linux-gnu.tar.gz'
+COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.4.2/sparkscore-0.12.4.2-i686-pc-linux-gnu.tar.gz'
 COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
@@ -108,7 +111,7 @@ function intro(){
   |       /|   |___||   :   ||   :  \ |     \ |       /
   |__:___/ |___|    |___|   ||   |___\|      \|__:___/
      :                  |___||___|    |___\  /   :
-   Auto Installer v1.0.4                   \/ '
+   Auto Installer v1.0.6                   \/ '
 
   echo -e "${GREEN}This script will prepare your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
   echo -e "${GREEN}After the installation is completed, the script run a series of tests   "
