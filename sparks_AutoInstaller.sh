@@ -606,6 +606,9 @@ done
 echo
 }
 
+#todo
+#if explorer is not availabel set a default for mncount anmd netblocks
+
 function get_mn_count() {
 wget -q http://explorer.sparkspay.io/api/getmasternodecount -O getmasternodecount
 mncount=$(cat "getmasternodecount" | grep "total")
@@ -683,6 +686,12 @@ function spk_versioncheck() {
               #could read and reuse the masternodeprivkey before removing it
               #should verify the lenth of key if fails then create new key
               #should/could back up the wallet
+
+              ## todo
+              ## if for some reason sparks.conf is not there it wil not copy the masternodeprivkey
+              ## it creates a key but does not prompt you to enter one.
+              ## maybe look at fixing this maybe..
+
             else
               echo -e "${RED}you must be sure to continue with a fresh install "
               exit 1
@@ -776,7 +785,7 @@ payment has a minimum$mncount confirmations.
 
   Configuration file is : $CONFIGFOLDER/$CONFIG_FILE
   VPS_IP                : $NODEIP:$COIN_PORT
-  MASTERNODE GENKEY is  : $COINKEY$
+  MASTERNODE GENKEY is  : $COINKEY
   Sentinel is installed : $CONFIGFOLDER/sentinel
   Sentinel logs         : $CONFIGFOLDER/sentinel.log
   Sentinal test         : $sencheck
