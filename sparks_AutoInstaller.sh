@@ -904,16 +904,17 @@ fi
     vpsblock2=$($COIN_CLI getinfo | grep blocks)
     vpsblock2=${vpsblock2#*:}
     vpsblock2=${vpsblock2%,*}
- 
-    if [[ "$vpsblock2" == " 317573" ]] ; then
-      echo -e "${GREEN}Skipping blockchain cleanup! ${NC}"
-    else
+
+ #Usefull if full resync needed if block does not match block 
+    #if [[ "$vpsblock2" == " 317573" ]] ; then
+    #  echo -e "${GREEN}Skipping blockchain cleanup! ${NC}"
+    #else
       sudo cp wallet.dat wallet.bup > /dev/null 2>&1
       sudo cp debug.log debug.bup > /dev/null 2>&1
       sudo rm -rf *.dat *.log blocks chainstate database .lock -r > /dev/null 2>&1
       sudo cp wallet.bup wallet.dat > /dev/null 2>&1
       grab_bootstrap
-    fi
+    #fi
   fi
 
   sudo systemctl stop $COIN_NAME.service > /dev/null 2>&1
