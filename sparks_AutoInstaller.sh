@@ -893,6 +893,29 @@ else
 echo -e "${GREEN}Skipping Ubuntu Upgrade! ${NC}"
 fi
   echo -e "${GREEN}Start clean up ${NC}"
+
+  #For version 12.4.2 RESYNC is required
+  #backsup and restores wallet
+  #backsup debug.log file
+  #does not remove conf file
+  if [[ $COIN_VERSION == '120402' ]] ; then
+    cd $CONFIGFOLDER > /dev/null 2>&1
+
+    vpsblock2=$($COIN_CLI getinfo | grep blocks)
+    vpsblock2=${vpsblock2#*:}
+    vpsblock2=${vpsblock2%,*}
+ 
+    if [[ "$vpsblock2" == " 317573" ]] ; then
+      echo -e "${GREEN}Skipping blockchain cleanup! ${NC}"
+    else
+      sudo cp wallet.dat wallet.bup > /dev/null 2>&1
+      sudo cp debug.log debug.bup > /dev/null 2>&1
+      sudo rm -rf *.dat *.log blocks chainstate database .lock -r > /dev/null 2>&1
+      sudo cp wallet.bup wallet.dat > /dev/null 2>&1
+      grab_bootstrap
+    fi
+  fi
+
   sudo systemctl stop $COIN_NAME.service > /dev/null 2>&1
   sudo killall $COIN_DAEMON > /dev/null 2>&1
   #remove some old files
@@ -904,19 +927,6 @@ fi
   sudo rm -rf $COIN_EPATH >/dev/null 2>&1
   #rename the info file for info
   sudo mv $HOMEPATH/$COIN_NAME.info $HOMEPATH/$COIN_NAME.info.old >/dev/null 2>&1
-
-  #For version 12.4.2 RESYNC is required
-  #backsup and restores wallet
-  #backsup debug.log file
-  #does not remove conf file
-  if [[ $COIN_VERSION == '120402' ]] ; then
-    cd $CONFIGFOLDER > /dev/null 2>&1
-    sudo cp wallet.dat wallet.bup > /dev/null 2>&1
-    sudo cp debug.log debug.bup > /dev/null 2>&1
-    sudo rm -rf *.dat *.log blocks chainstate database .lock -r > /dev/null 2>&1
-    sudo cp wallet.bup wallet.dat > /dev/null 2>&1
-    grab_bootstrap
-  fi
 
   #Remove old sentinel and install from new repo
   #check sentinel repository
