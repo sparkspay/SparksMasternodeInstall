@@ -6,9 +6,16 @@
 #|       /|   |___||   :   ||   :  \ |     \ |       /
 #|__:___/ |___|    |___|   ||   |___\|      \|__:___/
 #   :                  |___||___|    |___\  /   :
-#  v 1.0.4                                \/ '
+#  v 1.0.6                                \/ '
 
 #ChangeLOG
+#V 1.0.6
+#updated to SparksPay v0.12.4.2
+#For version 12.4.2 RESYNC is required when upgrading
+
+#V 1.0.5
+#updated to SparksPay v0.12.4.1
+
 #V 1.0.4
 #updated to SparksPay v0.12.4.0
 
@@ -46,17 +53,17 @@ USER=$USER
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='sparks.conf'
 COIN_DAEMON='sparksd'
-COIN_VERSION='120400'
+COIN_VERSION='120402'
 ####check
 COIN_WALLET_VERSION='61000'
-COIN_PROTOCAL_VERSION='70212'
+COIN_PROTOCAL_VERSION='70213'
 ###
 COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
 #needs to be updated once public
-COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.4.0/sparkscore-0.12.4.0-x86_64-linux-gnu.tar.gz'
-COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.4.0/sparkscore-0.12.4.0-i686-pc-linux-gnu.tar.gz'
+COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.4.2/sparkscore-0.12.4.2-x86_64-linux-gnu.tar.gz'
+COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.4.2/sparkscore-0.12.4.2-i686-pc-linux-gnu.tar.gz'
 COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
@@ -105,7 +112,7 @@ function intro(){
   |       /|   |___||   :   ||   :  \ |     \ |       /
   |__:___/ |___|    |___|   ||   |___\|      \|__:___/
      :                  |___||___|    |___\  /   :
-   Auto Installer v1.0.4                   \/ '
+   Auto Installer v1.0.6                   \/ '
 
   echo -e "${GREEN}This script will prepare your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
   echo -e "${GREEN}After the installation is completed, the script run a series of tests   "
@@ -138,7 +145,7 @@ purgeOldInstallation() {
     sudo rm -rf $COIN_EPATH >/dev/null 2>&1
     sudo mv $HOMEPATH/$COIN_NAME.info $HOMEPATH/$COIN_NAME.info.old >/dev/null 2>&1
 
-    if [[ $CLEANSPARKS='true' ]] ; then
+        if [[ $CLEANSPARKS='true' ]] ; then
       #remove old ufw port allow
       sudo ufw delete allow 8890/tcp > /dev/null 2>&1
       #remove old Service
@@ -555,8 +562,9 @@ sudo systemctl start fail2ban >/dev/null 2>&1
 }
 
 function block_countdown() {
-msg="The coin daemon is now processing the bootstrap. will retry in ...  "
-msg1="The block count will only move once the bootstrap has been loaded into memory"
+msg="Now processing the bootstrap. script will update progress in ...  "
+msg1="It takes time to load the headers, the count will only move once they are loaded."
+#msg1="The block count will only move once the bootstrap has been loaded into memory"
 msg2="Currently $vpsblock block's out of $netblock processed   "
 clear
 
@@ -602,6 +610,9 @@ sleep 1
 done
 echo
 }
+
+#todo
+#if explorer is not availabel set a default for mncount anmd netblocks
 
 function get_mn_count() {
 wget -q http://explorer.sparkspay.io/api/getmasternodecount -O getmasternodecount
@@ -681,11 +692,11 @@ function spk_versioncheck() {
               #should verify the lenth of key if fails then create new key
               #should/could back up the wallet
 
-              ##
+              ## todo
               ## if for some reason sparks.conf is not there it wil not copy the masternodeprivkey
               ## it creates a key but does not prompt you to enter one.
               ## maybe look at fixing this maybe..
-              ##
+
             else
               echo -e "${RED}you must be sure to continue with a fresh install "
               exit 1
@@ -779,7 +790,7 @@ payment has a minimum$mncount confirmations.
 
   Configuration file is : $CONFIGFOLDER/$CONFIG_FILE
   VPS_IP                : $NODEIP:$COIN_PORT
-  MASTERNODE GENKEY is  : $COINKEY$
+  MASTERNODE GENKEY is  : $COINKEY
   Sentinel is installed : $CONFIGFOLDER/sentinel
   Sentinel logs         : $CONFIGFOLDER/sentinel.log
   Sentinal test         : $sencheck
@@ -894,6 +905,19 @@ fi
   #rename the info file for info
   sudo mv $HOMEPATH/$COIN_NAME.info $HOMEPATH/$COIN_NAME.info.old >/dev/null 2>&1
 
+  #For version 12.4.2 RESYNC is required
+  #backsup and restores wallet
+  #backsup debug.log file
+  #does not remove conf file
+  if [[ $COIN_VERSION == '120402' ]] ; then
+    cd $CONFIGFOLDER > /dev/null 2>&1
+    sudo cp wallet.dat wallet.bup > /dev/null 2>&1
+    sudo cp debug.log debug.bup > /dev/null 2>&1
+    sudo rm -rf *.dat *.log blocks chainstate database .lock -r > /dev/null 2>&1
+    sudo cp wallet.bup wallet.dat > /dev/null 2>&1
+    grab_bootstrap
+  fi
+
   #Remove old sentinel and install from new repo
   #check sentinel repository
   cd $CONFIGFOLDER/sentinel > /dev/null 2>&1
@@ -930,7 +954,7 @@ spk_versioncheck
 if [ $UPGRADESPARKS = "true" ]; then
   clear
   upgrade_node
-  fi
+fi
 
 #do if CLEANSPARKS
 if [ $CLEANSPARKS = "true" ]; then
