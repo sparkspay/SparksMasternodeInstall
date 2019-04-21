@@ -563,7 +563,7 @@ sudo systemctl start fail2ban >/dev/null 2>&1
 
 function block_countdown() {
 msg="Now processing the bootstrap. script will update progress in ...  "
-msg1="It takes up to 5 minuits to load the headers, the count will only move once they are loaded."
+msg1="It takes time to load the headers, the count will only move once they are loaded."
 #msg1="The block count will only move once the bootstrap has been loaded into memory"
 msg2="Currently $vpsblock block's out of $netblock processed   "
 clear
@@ -909,13 +909,13 @@ fi
   #backsup and restores wallet
   #backsup debug.log file
   #does not remove conf file
-  if [[ $COIN_VERSION='120402' ]] ; then
-  cd $CONFIGFOLDER > /dev/null 2>&1
-  sudo cp wallet.dat wallet.bup > /dev/null 2>&1
-  sudo cp debug.log debug.bup > /dev/null 2>&1
-  sudo rm -rf *.dat *.log blocks chainstate database .lock -r > /dev/null 2>&1
-  sudo cp wallet.bup wallet.dat > /dev/null 2>&1
-  grab_bootstrap
+  if [[ $COIN_VERSION == '120402' ]] ; then
+    cd $CONFIGFOLDER > /dev/null 2>&1
+    sudo cp wallet.dat wallet.bup > /dev/null 2>&1
+    sudo cp debug.log debug.bup > /dev/null 2>&1
+    sudo rm -rf *.dat *.log blocks chainstate database .lock -r > /dev/null 2>&1
+    sudo cp wallet.bup wallet.dat > /dev/null 2>&1
+    grab_bootstrap
   fi
 
   #Remove old sentinel and install from new repo
