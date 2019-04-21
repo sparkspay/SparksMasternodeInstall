@@ -11,6 +11,7 @@
 #ChangeLOG
 #V 1.0.6
 #updated to SparksPay v0.12.4.2
+#For version 12.4.2 RESYNC is required when upgrading 
 
 #V 1.0.5
 #updated to SparksPay v0.12.4.1
@@ -144,7 +145,7 @@ purgeOldInstallation() {
     sudo rm -rf $COIN_EPATH >/dev/null 2>&1
     sudo mv $HOMEPATH/$COIN_NAME.info $HOMEPATH/$COIN_NAME.info.old >/dev/null 2>&1
 
-    if [[ $CLEANSPARKS='true' ]] ; then
+        if [[ $CLEANSPARKS='true' ]] ; then
       #remove old ufw port allow
       sudo ufw delete allow 8890/tcp > /dev/null 2>&1
       #remove old Service
@@ -903,6 +904,19 @@ fi
   #rename the info file for info
   sudo mv $HOMEPATH/$COIN_NAME.info $HOMEPATH/$COIN_NAME.info.old >/dev/null 2>&1
 
+  #For version 12.4.2 RESYNC is required
+  #backsup and restores wallet
+  #backsup debug.log file
+  #does not remove conf file
+  if [[ $COIN_VERSION='120402' ]] ; then
+  cd $CONFIGFOLDER > /dev/null 2>&1
+  sudo cp wallet.dat wallet.bup > /dev/null 2>&1
+  sudo cp debug.log debug.bup > /dev/null 2>&1
+  sudo rm -rf *.dat *.log blocks chainstate database .lock -r > /dev/null 2>&1
+  sudo cp wallet.bup wallet.dat > /dev/null 2>&1
+  grab_bootstrap
+  fi
+
   #Remove old sentinel and install from new repo
   #check sentinel repository
   cd $CONFIGFOLDER/sentinel > /dev/null 2>&1
@@ -939,7 +953,7 @@ spk_versioncheck
 if [ $UPGRADESPARKS = "true" ]; then
   clear
   upgrade_node
-  fi
+fi
 
 #do if CLEANSPARKS
 if [ $CLEANSPARKS = "true" ]; then
