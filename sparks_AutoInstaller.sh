@@ -11,7 +11,7 @@
 #ChangeLOG
 #V 1.0.6
 #updated to SparksPay v0.12.4.2
-#For version 12.4.2 RESYNC is required when upgrading 
+#For version 12.4.2 RESYNC is required when upgrading
 
 #V 1.0.5
 #updated to SparksPay v0.12.4.1
@@ -562,8 +562,9 @@ sudo systemctl start fail2ban >/dev/null 2>&1
 }
 
 function block_countdown() {
-msg="The coin daemon is now processing the bootstrap. will retry in ...  "
-msg1="The block count will only move once the bootstrap has been loaded into memory"
+msg="Now processing the bootstrap. script will update progress in ...  "
+msg1="It takes up to 5 minuits to load the headers, the count will only move once they are loaded."
+#msg1="The block count will only move once the bootstrap has been loaded into memory"
 msg2="Currently $vpsblock block's out of $netblock processed   "
 clear
 
