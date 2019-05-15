@@ -80,19 +80,19 @@ If you require further assistance contact the support team @ [Discord](https://d
 ***
 
 ***Step 11***
-* You will now see all of the relavant information for your server.
+* You will now see all of the relevant information for your server.
 * Keep this terminal open as we will need the info for the wallet setup.
 ![Example-installing](https://i.imgur.com/P0PLUeq.png)
 ***
 
-## Section D: Preparing the Local wallet
+## Section B: Preparing the Local wallet
 
 ***Step 1***
 * Download and install the Sparks wallet [here](https://github.com/sparkspay/sparks/releases)
 ***
 
 ***Step 2***
-* Send EXACLY 1,000 SPK to a receive address within your wallet.
+* Send EXACTLY 1,000 SPK to a receive address within your wallet.
 ***
 
 ***Step 3***
@@ -118,7 +118,7 @@ If you require further assistance contact the support team @ [Discord](https://d
 * Paste these into the text document you created earlier as you will need them in the next step.
 ***
 
-# Section E: Connecting & Starting the masternode
+# Section C: Connecting & Starting the masternode
 
 ***Step 1***
 * Go to the tools tab within the wallet and click open "masternode configuration file"
