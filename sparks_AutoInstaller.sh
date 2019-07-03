@@ -6,9 +6,12 @@
 #|       /|   |___||   :   ||   :  \ |     \ |       /
 #|__:___/ |___|    |___|   ||   |___\|      \|__:___/
 #   :                  |___||___|    |___\  /   :
-#  v 1.0.6                                \/ '
+#  v 1.0.8                                \/ '
 
 #ChangeLOG
+#V1.0.8
+#updated to SparksPay v0.12.4.3
+
 #V1.0.7
 #updated to SparksPay v0.12.4.3-beta1
 
@@ -65,8 +68,8 @@ COIN_CLI='sparks-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_REPO='https://github.com/sparkspay/sparks.git'
 #needs to be updated once public
-COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.4.3-beta1/sparkscore-0.12.4.3-beta1-x86_64-linux-gnu.tar.gz'
-COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.4.3-beta1/sparkscore-0.12.4.3-beta1-i686-pc-linux-gnu.tar.gz'
+COIN_TGZx86_64='https://github.com/sparkspay/sparks/releases/download/v0.12.4.3/sparkscore-0.12.4.3-x86_64-linux-gnu.tar.gz'
+COIN_TGZx86_32='https://github.com/sparkspay/sparks/releases/download/v0.12.4.3/sparkscore-0.12.4.3-i686-pc-linux-gnu.tar.gz'
 COIN_EPATH='sparkscore-0.12.4/bin'
 COIN_BOOTSTRAP='https://github.com/sparkspay/sparks/releases/download/bootstrap/bootstrap.dat'
 SENTINEL_REPO='https://github.com/sparkspay/sentinel.git'
@@ -115,7 +118,7 @@ function intro(){
   |       /|   |___||   :   ||   :  \ |     \ |       /
   |__:___/ |___|    |___|   ||   |___\|      \|__:___/
      :                  |___||___|    |___\  /   :
-   Auto Installer v1.0.6                   \/ '
+   Auto Installer v1.0.8                   \/ '
 
   echo -e "${GREEN}This script will prepare your VPS and install the latest version of ${RED}$COIN_NAME${NC}"
   echo -e "${GREEN}After the installation is completed, the script run a series of tests   "
